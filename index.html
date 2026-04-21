@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aayush Mondkar — Portfolio</title>
+  <meta name="description" content="Selected works by Aayush Mondkar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --ink: #121212;
+      --muted: #6b6b68;
+      --line: #e6e4df;
+      --accent: #121212;
+      --card: #ffffff;
+      --radius: 4px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Display font — Coral Pixels */
+    .display {
+      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.6; transition: opacity 0.2s ease; }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      z-index: 50;
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .brand {
+      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .nav-links a:hover { color: var(--ink); opacity: 1; }
+    @media (max-width: 600px) {
+      .nav-links { gap: 18px; }
+      nav .wrap { padding: 0 20px; }
+    }
+
+    /* ---------- HERO ---------- */
+    header.hero {
+      padding: 140px 0 100px;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero h1 {
+      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-size: clamp(44px, 7vw, 88px);
+      line-height: 1.1;
+      letter-spacing: 0;
+      margin: 0 0 28px;
+      font-weight: 400;
+      max-width: 900px;
+    }
+    .hero p.lede {
+      font-size: clamp(17px, 1.6vw, 20px);
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0;
+    }
+    .hero .meta {
+      margin-top: 40px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      padding: 96px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+    }
+
+    h2 {
+      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-size: clamp(32px, 3.8vw, 52px);
+      line-height: 1.15;
+      letter-spacing: 0;
+      font-weight: 400;
+      margin: 0 0 40px;
+      max-width: 800px;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-grid p {
+      font-size: 17px;
+      color: var(--ink);
+      margin: 0 0 20px;
+      text-align: justify;
+      hyphens: auto;
+    }
+    .about-grid p:last-child { margin-bottom: 0; }
+    .about-meta {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .about-meta .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .about-meta .row:last-child { border-bottom: none; }
+    .about-meta .row .k {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+    .about-meta .row .v { color: var(--ink); }
+    @media (max-width: 800px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ---------- PROJECTS ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 40px;
+    }
+    @media (max-width: 800px) {
+      .grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .project {
+      display: block;
+      cursor: pointer;
+    }
+    .project:hover { opacity: 1; }
+    .project .thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .project .thumb .placeholder {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .project .info {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .project h3 {
+      font-size: 17px;
+      margin: 0;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .project .tag {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .project p.desc {
+      margin: 6px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* pattern backgrounds for empty thumbs */
+    .p1 { background: linear-gradient(135deg, #f0ece4 0%, #d9d3c6 100%); }
+    .p2 { background: linear-gradient(135deg, #e7e9ec 0%, #c4c9d1 100%); }
+    .p3 { background: linear-gradient(135deg, #ece4e4 0%, #d1bfbf 100%); }
+    .p4 { background: linear-gradient(135deg, #e4ecea 0%, #b8c9c5 100%); }
+    .p5 { background: linear-gradient(135deg, #efece2 0%, #ccc49f 100%); }
+    .p6 { background: linear-gradient(135deg, #e6e0ec 0%, #bfb3cf 100%); }
+
+    /* ---------- CONTACT ---------- */
+    .contact {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact h2 { margin-bottom: 20px; }
+    .contact p.lede {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 0 32px;
+    }
+    .email-link {
+      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-size: clamp(26px, 3.2vw, 40px);
+      font-weight: 400;
+      letter-spacing: 0;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      display: inline-block;
+    }
+    .email-link:hover { border-color: var(--ink); opacity: 1; }
+
+    .socials {
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .socials .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .socials .row:last-child { border-bottom: none; }
+    .socials .row a { color: var(--ink); font-weight: 500; }
+    .socials .row .k {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+
+    @media (max-width: 800px) {
+      .contact { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      padding: 40px 0 60px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      width: 100%;
+    }
+
+    /* ---------- TYPEWRITER ---------- */
+    #typewriter {
+      position: relative;
+    }
+    /* Invisible copy of the full text — reserves the exact final height
+       (including wrap across multiple lines) so the page doesn't reflow
+       while the overlay types in over it. */
+    .tw-sizer {
+      visibility: hidden;
+      pointer-events: none;
+      user-select: none;
+      display: block;
+    }
+    .tw-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .tw-caret {
+      display: inline-block;
+      margin-left: 0.05em;
+      color: var(--ink);
+      animation: tw-blink 0.9s steps(1) infinite;
+      font-weight: 400;
+    }
+    #typewriter.tw-done .tw-caret {
+      animation: tw-blink 1.1s steps(1) infinite;
+      opacity: 1;
+    }
+    @keyframes tw-blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tw-caret { display: none; }
+    }
+
+    /* ---------- REVEAL ANIMATION ---------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="wrap">
+      <div class="brand">Aayush Mondkar</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1 id="typewriter" data-text="Visual designer crafting thoughtful, considered work across identity, print, and digital."><span class="tw-sizer" aria-hidden="true">Visual designer crafting thoughtful, considered work across identity, print, and digital.</span><span class="tw-overlay"><span class="tw-text"></span><span class="tw-caret" aria-hidden="true">|</span></span></h1>
+      <p class="lede reveal">Projects born from curiosity. Case studies in solving beautifully. Experiments that refused to stay theoretical. Based at UMass Amherst.</p>
+      <div class="meta reveal">Portfolio · 2024 – Present</div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div>
+          <h2>A short introduction.</h2>
+        </div>
+        <div>
+          <p>Trained as an architect, wired as an artist. I move between structure and sensation, drawing from the full spectrum of human creativity: the tension in a film frame, the weight of a typeface, the silence between notes, the story a photograph refuses to explain.</p>
+          <p>Architecture taught me that every constraint is a question, and every question has an answer worth finding. That instinct, to solve, to untangle, to make something work and mean something, travels with me into every field I touch.</p>
+          <p>For me, design is never just form following function. It's form following feeling, shaped by everything seen, heard, worn, and wondered about.</p>
+          <p>I build environments. But first, I pay attention.</p>
+          <div class="about-meta" style="margin-top: 32px;">
+            <div class="row"><span class="k">Based in</span><span class="v">Amherst, MA, USA</span></div>
+            <div class="row"><span class="k">Focus</span><span class="v">Architecture</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>Projects & case studies.</h2>
+      <div class="grid">
+
+        <a class="project reveal" href="project-1.html">
+          <div class="thumb p1"><span class="placeholder">Project image</span></div>
+          <div class="info">
+            <h3>Project One, 2024</h3>
+          </div>
+        </a>
+
+        <a class="project reveal" href="project-2.html">
+          <div class="thumb p2"><span class="placeholder">Project image</span></div>
+          <div class="info">
+            <h3>Project Two, 2024</h3>
+          </div>
+        </a>
+
+        <a class="project reveal" href="project-3.html">
+          <div class="thumb p3"><span class="placeholder">Project image</span></div>
+          <div class="info">
+            <h3>Project Three, 2023</h3>
+          </div>
+        </a>
+
+        <a class="project reveal" href="project-4.html">
+          <div class="thumb p4"><span class="placeholder">Project image</span></div>
+          <div class="info">
+            <h3>Project Four, 2023</h3>
+          </div>
+        </a>
+
+        <a class="project reveal" href="project-5.html">
+          <div class="thumb p5"><span class="placeholder">Project image</span></div>
+          <div class="info">
+            <h3>Project Five, 2023</h3>
+          </div>
+        </a>
+
+        <a class="project reveal" href="project-6.html">
+          <div class="thumb p6"><span class="placeholder">Project image</span></div>
+          <div class="info">
+            <h3>Project Six, 2022</h3>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div>
+          <h2>Let's work together.</h2>
+          <p class="lede">For commissions, collaborations, or a friendly hello — the fastest way to reach me is email.</p>
+          <a class="email-link" href="mailto:hello@example.com">hello@example.com →</a>
+        </div>
+        <div class="socials">
+          <div class="row"><span class="k">Instagram</span><a href="#" target="_blank" rel="noopener">@yourhandle</a></div>
+          <div class="row"><span class="k">Are.na</span><a href="#" target="_blank" rel="noopener">/yourhandle</a></div>
+          <div class="row"><span class="k">Read.cv</span><a href="#" target="_blank" rel="noopener">/yourname</a></div>
+          <div class="row"><span class="k">LinkedIn</span><a href="#" target="_blank" rel="noopener">/in/yourname</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div>© <span id="year"></span> Aayush Mondkar. All rights reserved.</div>
+      <div>Made with care.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Typewriter animation
+    (function () {
+      const el = document.getElementById("typewriter");
+      if (!el) return;
+      const textEl = el.querySelector(".tw-text");
+      const fullText = el.dataset.text || "";
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (prefersReduced) {
+        textEl.textContent = fullText;
+        el.classList.add("tw-done");
+        return;
+      }
+
+      let i = 0;
+      const baseDelay = 55;   // average ms per character
+      const jitter = 35;       // adds a little human variability
+      const punctuationPause = 220; // extra pause after , . ;
+
+      function typeNext() {
+        if (i >= fullText.length) {
+          el.classList.add("tw-done");
+          return;
+        }
+        const ch = fullText.charAt(i);
+        textEl.textContent += ch;
+        i++;
+        let delay = baseDelay + Math.random() * jitter;
+        if (",.;".includes(ch)) delay += punctuationPause;
+        setTimeout(typeNext, delay);
+      }
+
+      // Small initial pause so the page settles before typing starts
+      setTimeout(typeNext, 500);
+    })();
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
