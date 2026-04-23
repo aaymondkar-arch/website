@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project One — Aayush Mondkar</title>
-  <meta name="description" content="Project One — case study by Aayush Mondkar." />
+  <title>Botanical Garden — Aayush Mondkar</title>
+  <meta name="description" content="Botanical Garden — MBMA 2025 Architectural Student Competition, by Aayush Mondkar." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap" rel="stylesheet">
@@ -108,19 +108,25 @@
     /* HERO IMAGE */
     .hero-image {
       width: 100%;
-      aspect-ratio: 16 / 9;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       margin: 60px 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      background: #f0ece4;
+    }
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .hero-image .placeholder {
       font-size: 13px;
       color: var(--muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      padding: 80px 0;
+      display: block;
+      text-align: center;
     }
 
     /* CONTENT */
@@ -204,6 +210,7 @@
       aspect-ratio: 4 / 3;
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -211,6 +218,19 @@
     .gallery .tile.wide {
       grid-column: 1 / -1;
       aspect-ratio: 16 / 7;
+    }
+    .gallery .tile.has-image {
+      aspect-ratio: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      padding: 6% 8%;
+    }
+    .gallery .tile img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .gallery .tile .placeholder {
       font-size: 12px;
@@ -221,6 +241,33 @@
     @media (max-width: 800px) {
       .gallery { grid-template-columns: 1fr; }
       .gallery .tile.wide { aspect-ratio: 4 / 3; }
+    }
+
+    /* SMALLER SUB-GRID — 4 per row */
+    .gallery-sub {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .gallery-sub .stile {
+      aspect-ratio: 3 / 2;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+    }
+    .gallery-sub .stile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 800px) {
+      .gallery-sub { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 460px) {
+      .gallery-sub { grid-template-columns: 1fr; }
     }
 
     /* NEXT PROJECT */
@@ -267,6 +314,171 @@
     .p4 { background: linear-gradient(135deg, #e4ecea 0%, #b8c9c5 100%); }
     .p5 { background: linear-gradient(135deg, #efece2 0%, #ccc49f 100%); }
     .p6 { background: linear-gradient(135deg, #e6e0ec 0%, #bfb3cf 100%); }
+
+    /* gallery cursor */
+    .gallery .tile img,
+    .gallery-sub .stile img { cursor: zoom-in; }
+
+    /* ---------- LIGHTBOX ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: #0b0b0b;
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+    }
+    .lightbox.open { display: block; }
+    body.lb-open { overflow: hidden; }
+
+    .lightbox .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+    .lightbox .stage.grabbing { cursor: grabbing; }
+    .lightbox img.zoomed {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      transform-origin: 50% 50%;
+      will-change: transform;
+      transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .lightbox .stage.dragging img.zoomed { transition: none; }
+
+    .lightbox .lb-top {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .lightbox .lb-back,
+    .lightbox .lb-controls,
+    .lightbox .lb-counter { pointer-events: auto; }
+
+    .lightbox .lb-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      color: #000;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .lightbox .lb-back:hover { background: #f4f4f4; }
+
+    .lightbox .lb-counter {
+      color: #000;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+      font-weight: 700;
+    }
+
+    .lightbox .lb-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .lightbox .lb-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: #000;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      transition: background 0.15s ease;
+    }
+    .lightbox .lb-btn:hover { background: rgba(0,0,0,0.06); }
+    .lightbox .lb-btn:disabled { opacity: 0.35; cursor: default; }
+    .lightbox .lb-level {
+      font-size: 12px;
+      color: #000;
+      min-width: 48px;
+      text-align: center;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+
+    /* prev / next side arrows */
+    .lightbox .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #ffffff;
+      color: #000;
+      font-size: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
+      transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
+      font-family: inherit;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .lightbox .lb-nav:hover { background: #f4f4f4; }
+    .lightbox .lb-nav:disabled { opacity: 0.25; cursor: default; }
+    .lightbox .lb-prev { left: 24px; }
+    .lightbox .lb-next { right: 24px; }
+
+    @media (max-width: 600px) {
+      .lightbox .lb-top { top: 14px; left: 14px; right: 14px; gap: 8px; }
+      .lightbox .lb-back,
+      .lightbox .lb-counter { padding: 8px 12px; font-size: 11px; }
+      .lightbox .lb-nav { width: 42px; height: 42px; font-size: 18px; }
+      .lightbox .lb-prev { left: 10px; }
+      .lightbox .lb-next { right: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -281,27 +493,26 @@
   <header class="project-hero">
     <div class="wrap">
       <p class="label">Project 01</p>
-      <h1>Project One</h1>
-      <div class="tag">Identity · 2024 · Client name</div>
-      <div class="hero-image p1"><span class="placeholder">Hero image</span></div>
+      <h1>Botanical Garden</h1>
+      <div class="tag">Architectural Design · 2025 · MBMA</div>
+      <div class="hero-image"><img src="hero-1.jpg" alt="Botanical Garden hero" /></div>
     </div>
   </header>
 
   <section>
     <div class="wrap">
-      <p class="section-label">Overview</p>
       <div class="overview">
         <div>
-          <h2>A short project title or statement.</h2>
+          <h2>MBMA 2025 Architectural Student Competition.</h2>
         </div>
         <div>
-          <p>A short description of the project goes here. Explain the brief, your role, and what made the work distinct.</p>
-          <p>Use a second paragraph for process notes, collaborators, or the outcome. Keep it considered and concise.</p>
+          <p>A submission for the Metal Building Manufacturing Association 2025 competition. The objective of the architecture student competition is to design a botanical garden and event center. This complex will include both indoor and outdoor facilities and spaces including an event center, botanical gardens with biomes, greenhouses, and aviary, sculpture garden, observation deck, educational and research classrooms. The project is to use metal building construction with a maximum of two stories.</p>
+          <p>This new facility should embody the community's commitment to environmental responsibility and incorporate sustainable strategies into the way that the building is designed and operated. In particular, the new facility should take advantage of the sustainability benefits associated with using metal building construction.</p>
           <div class="meta-list" style="margin-top: 32px;">
-            <div class="row"><span class="k">Discipline</span><span class="v">Identity</span></div>
-            <div class="row"><span class="k">Year</span><span class="v">2024</span></div>
-            <div class="row"><span class="k">Client</span><span class="v">Client name</span></div>
-            <div class="row"><span class="k">Role</span><span class="v">Design · Art direction</span></div>
+            <div class="row"><span class="k">Discipline</span><span class="v">Architectural Design</span></div>
+            <div class="row"><span class="k">Year</span><span class="v">2025</span></div>
+            <div class="row"><span class="k">Competition</span><span class="v">MBMA</span></div>
+            <div class="row"><span class="k">Won</span><span class="v">Award of Merit</span></div>
           </div>
         </div>
       </div>
@@ -312,11 +523,26 @@
     <div class="wrap">
       <p class="section-label">Selected imagery</p>
       <div class="gallery">
-        <div class="tile wide p1"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p2"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p3"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p4"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p5"><span class="placeholder">Image placeholder</span></div>
+        <div class="tile wide has-image"><img src="concept.jpg" alt="Botanical Garden — form diagram (zoning, horizontal push, vertical push+pull, extend, final form)" /></div>
+        <div class="tile has-image"><img src="test.jpg" alt="Botanical Garden — site plan" /></div>
+        <div class="tile has-image"><img src="first-floor-plan.jpg" alt="Botanical Garden — first floor plan" /></div>
+        <div class="tile has-image"><img src="assembly.jpg" alt="Botanical Garden — exploded assembly diagram" /></div>
+        <div class="tile has-image"><img src="image-3.jpg" alt="Botanical Garden — image 3" /></div>
+      </div>
+
+      <div class="gallery-sub">
+        <div class="stile"><img src="image-2.jpg" alt="Botanical Garden — image 2" /></div>
+        <div class="stile"><img src="image-4.jpg" alt="Botanical Garden — image 4" /></div>
+        <div class="stile"><img src="image-6.jpg" alt="Botanical Garden — image 6" /></div>
+        <div class="stile"><img src="image-7.jpg" alt="Botanical Garden — image 7" /></div>
+        <div class="stile"><img src="image-10.jpg" alt="Botanical Garden — image 10" /></div>
+        <div class="stile"><img src="image-11.jpg" alt="Botanical Garden — image 11" /></div>
+        <div class="stile"><img src="image-12.jpg" alt="Botanical Garden — image 12" /></div>
+        <div class="stile"><img src="image-13.jpg" alt="Botanical Garden — image 13" /></div>
+        <div class="stile"><img src="image-15.jpg" alt="Botanical Garden — image 15" /></div>
+        <div class="stile"><img src="image-19.jpg" alt="Botanical Garden — image 19" /></div>
+        <div class="stile"><img src="image-20.jpg" alt="Botanical Garden — image 20" /></div>
+        <div class="stile"><img src="image-21.jpg" alt="Botanical Garden — image 21" /></div>
       </div>
     </div>
   </section>
@@ -335,8 +561,183 @@
     </div>
   </footer>
 
+  <!-- Fullscreen gallery viewer -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lb-top">
+      <button class="lb-back" id="lb-back" type="button" aria-label="Close viewer">
+        <span aria-hidden="true">←</span><span>Back</span>
+      </button>
+      <div class="lb-counter" id="lb-counter">1 / 1</div>
+      <div class="lb-controls" role="group" aria-label="Zoom controls">
+        <button class="lb-btn" id="lb-zoom-out" type="button" aria-label="Zoom out">−</button>
+        <span class="lb-level" id="lb-level">100%</span>
+        <button class="lb-btn" id="lb-zoom-in" type="button" aria-label="Zoom in">+</button>
+        <button class="lb-btn" id="lb-reset" type="button" aria-label="Reset zoom" title="Reset">↺</button>
+      </div>
+    </div>
+    <button class="lb-nav lb-prev" id="lb-prev" type="button" aria-label="Previous image">‹</button>
+    <button class="lb-nav lb-next" id="lb-next" type="button" aria-label="Next image">›</button>
+    <div class="stage" id="lb-stage">
+      <img id="lb-img" class="zoomed" src="" alt="" />
+    </div>
+  </div>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ---------- Gallery lightbox with prev/next + zoom ----------
+    (function () {
+      // Collect every image in the gallery + sub-grid in DOM order
+      const triggers = Array.from(document.querySelectorAll(".gallery img, .gallery-sub img"));
+      if (!triggers.length) return;
+
+      const lb = document.getElementById("lightbox");
+      const stage = document.getElementById("lb-stage");
+      const img = document.getElementById("lb-img");
+      const back = document.getElementById("lb-back");
+      const counter = document.getElementById("lb-counter");
+      const zoomIn = document.getElementById("lb-zoom-in");
+      const zoomOut = document.getElementById("lb-zoom-out");
+      const reset = document.getElementById("lb-reset");
+      const level = document.getElementById("lb-level");
+      const prev = document.getElementById("lb-prev");
+      const next = document.getElementById("lb-next");
+
+      const MIN = 1, MAX = 5, STEP = 0.25;
+      let idx = 0;
+      let scale = 1, tx = 0, ty = 0;
+      let dragging = false, lastX = 0, lastY = 0;
+      let lastFocused = null;
+
+      function updateTransform() {
+        img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+        level.textContent = Math.round(scale * 100) + "%";
+        zoomOut.disabled = scale <= MIN + 0.001;
+        zoomIn.disabled = scale >= MAX - 0.001;
+        stage.style.cursor = scale > 1 ? (dragging ? "grabbing" : "grab") : "default";
+      }
+
+      function clampTranslate() {
+        const rect = stage.getBoundingClientRect();
+        const iw = img.clientWidth * scale;
+        const ih = img.clientHeight * scale;
+        const maxX = Math.max(0, (iw - rect.width) / 2);
+        const maxY = Math.max(0, (ih - rect.height) / 2);
+        tx = Math.max(-maxX, Math.min(maxX, tx));
+        ty = Math.max(-maxY, Math.min(maxY, ty));
+      }
+
+      function zoomAt(clientX, clientY, delta) {
+        const prevScale = scale;
+        const nextScale = Math.max(MIN, Math.min(MAX, scale + delta));
+        if (nextScale === prevScale) return;
+        const rect = stage.getBoundingClientRect();
+        const cx = clientX - rect.left - rect.width / 2;
+        const cy = clientY - rect.top - rect.height / 2;
+        const ix = (cx - tx) / prevScale;
+        const iy = (cy - ty) / prevScale;
+        scale = nextScale;
+        tx = cx - ix * scale;
+        ty = cy - iy * scale;
+        if (scale <= 1) { scale = 1; tx = 0; ty = 0; }
+        clampTranslate();
+        updateTransform();
+      }
+      function zoomCenter(delta) {
+        const rect = stage.getBoundingClientRect();
+        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, delta);
+      }
+      function resetView() { scale = 1; tx = 0; ty = 0; updateTransform(); }
+
+      function show(i) {
+        idx = (i + triggers.length) % triggers.length;
+        const src = triggers[idx];
+        img.src = src.src;
+        img.alt = src.alt || "";
+        counter.textContent = `${idx + 1} / ${triggers.length}`;
+        resetView();
+      }
+
+      function open(i, triggerEl) {
+        lastFocused = triggerEl || null;
+        lb.classList.add("open");
+        lb.setAttribute("aria-hidden", "false");
+        document.body.classList.add("lb-open");
+        show(i);
+        back.focus();
+      }
+      function close() {
+        lb.classList.remove("open");
+        lb.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("lb-open");
+        resetView();
+        if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+      }
+
+      // Wire each gallery image to open the lightbox at its index
+      triggers.forEach((el, i) => {
+        el.addEventListener("click", (e) => { e.preventDefault(); open(i, el); });
+      });
+
+      back.addEventListener("click", close);
+      prev.addEventListener("click", () => show(idx - 1));
+      next.addEventListener("click", () => show(idx + 1));
+      zoomIn.addEventListener("click", () => zoomCenter(STEP));
+      zoomOut.addEventListener("click", () => zoomCenter(-STEP));
+      reset.addEventListener("click", resetView);
+
+      // Keyboard: ESC, arrows, +/-, 0
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowLeft") show(idx - 1);
+        else if (e.key === "ArrowRight") show(idx + 1);
+        else if (e.key === "+" || e.key === "=") { e.preventDefault(); zoomCenter(STEP); }
+        else if (e.key === "-" || e.key === "_") { e.preventDefault(); zoomCenter(-STEP); }
+        else if (e.key === "0") resetView();
+      });
+
+      // Mouse wheel zoom
+      stage.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? STEP : -STEP;
+        zoomAt(e.clientX, e.clientY, delta);
+      }, { passive: false });
+
+      // Double-click to toggle zoom
+      stage.addEventListener("dblclick", (e) => {
+        if (scale > 1) resetView();
+        else zoomAt(e.clientX, e.clientY, 1.5);
+      });
+
+      // Drag to pan
+      stage.addEventListener("pointerdown", (e) => {
+        if (scale <= 1) return;
+        dragging = true;
+        lastX = e.clientX; lastY = e.clientY;
+        stage.classList.add("dragging");
+        stage.setPointerCapture(e.pointerId);
+        updateTransform();
+      });
+      stage.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        tx += e.clientX - lastX;
+        ty += e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        clampTranslate();
+        img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      });
+      function endDrag(e) {
+        if (!dragging) return;
+        dragging = false;
+        stage.classList.remove("dragging");
+        try { stage.releasePointerCapture(e.pointerId); } catch (_) {}
+        updateTransform();
+      }
+      stage.addEventListener("pointerup", endDrag);
+      stage.addEventListener("pointercancel", endDrag);
+      stage.addEventListener("pointerleave", endDrag);
+    })();
   </script>
 
 </body>

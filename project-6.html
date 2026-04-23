@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Six — Aayush Mondkar</title>
-  <meta name="description" content="Project Six — case study by Aayush Mondkar." />
+  <title>Urban Artificial Intelligence — Aayush Mondkar</title>
+  <meta name="description" content="Urban Artificial Intelligence — a zine from Research Methodology, by Aayush Mondkar." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap" rel="stylesheet">
@@ -108,19 +108,25 @@
     /* HERO IMAGE */
     .hero-image {
       width: 100%;
-      aspect-ratio: 16 / 9;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       margin: 60px 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      background: #0b0b0b;
+    }
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     .hero-image .placeholder {
       font-size: 13px;
       color: var(--muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      padding: 80px 0;
+      display: block;
+      text-align: center;
     }
 
     /* CONTENT */
@@ -192,6 +198,135 @@
     .meta-list .row .v { color: var(--ink); }
     @media (max-width: 800px) {
       .overview { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ZINE IMAGE */
+    .zine-image {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: block;
+      cursor: zoom-in;
+    }
+    .zine-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ---------- LIGHTBOX ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: #0b0b0b;
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+    }
+    .lightbox.open { display: block; }
+    body.lb-open { overflow: hidden; }
+
+    .lightbox .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+    .lightbox .stage.grabbing { cursor: grabbing; }
+    .lightbox img.zoomed {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      transform-origin: 50% 50%;
+      will-change: transform;
+      transition: transform 0.15s ease-out;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .lightbox .stage.dragging img.zoomed { transition: none; }
+
+    .lightbox .lb-top {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .lightbox .lb-back,
+    .lightbox .lb-controls {
+      pointer-events: auto;
+    }
+    .lightbox .lb-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      color: #000;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .lightbox .lb-back:hover { background: #f4f4f4; }
+
+    .lightbox .lb-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .lightbox .lb-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: #000;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      transition: background 0.15s ease;
+    }
+    .lightbox .lb-btn:hover { background: rgba(0,0,0,0.06); }
+    .lightbox .lb-btn:disabled { opacity: 0.35; cursor: default; }
+    .lightbox .lb-level {
+      font-size: 12px;
+      color: #000;
+      min-width: 48px;
+      text-align: center;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      .lightbox .lb-top { top: 14px; left: 14px; right: 14px; }
+      .lightbox .lb-back { padding: 8px 12px; font-size: 11px; }
     }
 
     /* GALLERY */
@@ -281,27 +416,26 @@
   <header class="project-hero">
     <div class="wrap">
       <p class="label">Project 06</p>
-      <h1>Project Six</h1>
-      <div class="tag">Exhibition · 2022 · Client name</div>
-      <div class="hero-image p6"><span class="placeholder">Hero image</span></div>
+      <h1>Urban Artificial Intelligence</h1>
+      <div class="tag">Zine · 2025 · Research Methodology</div>
+      <div class="hero-image"><img src="hero.jpg" alt="Urban Artificial Intelligence hero" /></div>
     </div>
   </header>
 
   <section>
     <div class="wrap">
-      <p class="section-label">Overview</p>
       <div class="overview">
         <div>
-          <h2>A short project title or statement.</h2>
+          <h2>A zine on Urban AI.</h2>
         </div>
         <div>
-          <p>A short description of the project goes here. Explain the brief, your role, and what made the work distinct.</p>
-          <p>Use a second paragraph for process notes, collaborators, or the outcome. Keep it considered and concise.</p>
+          <p>What if the city could learn to think? Exploring AI-driven urban systems that sense, adapt, and optimize in real time, and the human responsibility of keeping them in check.</p>
+          <p>Coupling with parametric modeling environments such as Grasshopper and its analysis plugins like Ladybug, Honeybee, or Karamba enables the simulation and optimization of spatial, environmental, and structural systems. This synthesis allows the urban environment not only to be monitored, but actively reconfigured through intelligent feedback systems shifting toward a cyber-physical ecosystem capable of learning from itself.</p>
           <div class="meta-list" style="margin-top: 32px;">
-            <div class="row"><span class="k">Discipline</span><span class="v">Exhibition</span></div>
-            <div class="row"><span class="k">Year</span><span class="v">2022</span></div>
-            <div class="row"><span class="k">Client</span><span class="v">Client name</span></div>
-            <div class="row"><span class="k">Role</span><span class="v">Design · Art direction</span></div>
+            <div class="row"><span class="k">Format</span><span class="v">Zine</span></div>
+            <div class="row"><span class="k">Year</span><span class="v">2025</span></div>
+            <div class="row"><span class="k">Course</span><span class="v">Research Methodology</span></div>
+            <div class="row"><span class="k">Role</span><span class="v">Research · Design</span></div>
           </div>
         </div>
       </div>
@@ -310,14 +444,7 @@
 
   <section>
     <div class="wrap">
-      <p class="section-label">Selected imagery</p>
-      <div class="gallery">
-        <div class="tile wide p6"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p2"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p3"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p4"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p5"><span class="placeholder">Image placeholder</span></div>
-      </div>
+      <div class="zine-image" id="zine-open" role="button" tabindex="0" aria-label="Open zine fullscreen"><img src="zine.jpg" alt="Urban Artificial Intelligence zine spread" /></div>
     </div>
   </section>
 
@@ -335,8 +462,169 @@
     </div>
   </footer>
 
+  <!-- Fullscreen zine viewer -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Zine viewer">
+    <div class="lb-top">
+      <button class="lb-back" id="lb-back" type="button" aria-label="Back to project">
+        <span aria-hidden="true">←</span><span>Back</span>
+      </button>
+      <div class="lb-controls" role="group" aria-label="Zoom controls">
+        <button class="lb-btn" id="lb-zoom-out" type="button" aria-label="Zoom out">−</button>
+        <span class="lb-level" id="lb-level">100%</span>
+        <button class="lb-btn" id="lb-zoom-in" type="button" aria-label="Zoom in">+</button>
+        <button class="lb-btn" id="lb-reset" type="button" aria-label="Reset zoom" title="Reset">↺</button>
+      </div>
+    </div>
+    <div class="stage" id="lb-stage">
+      <img id="lb-img" class="zoomed" src="zine.jpg" alt="Urban Artificial Intelligence zine spread" />
+    </div>
+  </div>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ---------- Zine lightbox ----------
+    (function () {
+      const trigger = document.getElementById("zine-open");
+      const lb = document.getElementById("lightbox");
+      const stage = document.getElementById("lb-stage");
+      const img = document.getElementById("lb-img");
+      const back = document.getElementById("lb-back");
+      const zoomIn = document.getElementById("lb-zoom-in");
+      const zoomOut = document.getElementById("lb-zoom-out");
+      const reset = document.getElementById("lb-reset");
+      const level = document.getElementById("lb-level");
+
+      const MIN = 1, MAX = 5, STEP = 0.25;
+      let scale = 1, tx = 0, ty = 0;
+      let dragging = false, lastX = 0, lastY = 0;
+
+      function updateTransform() {
+        img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+        level.textContent = Math.round(scale * 100) + "%";
+        zoomOut.disabled = scale <= MIN + 0.001;
+        zoomIn.disabled = scale >= MAX - 0.001;
+        stage.style.cursor = scale > 1 ? (dragging ? "grabbing" : "grab") : "default";
+      }
+
+      function clampTranslate() {
+        // Keep image from being dragged entirely off-screen.
+        const rect = stage.getBoundingClientRect();
+        const iw = img.clientWidth * scale;
+        const ih = img.clientHeight * scale;
+        // Max distance the image can move so at least part of it stays visible.
+        const maxX = Math.max(0, (iw - rect.width) / 2);
+        const maxY = Math.max(0, (ih - rect.height) / 2);
+        tx = Math.max(-maxX, Math.min(maxX, tx));
+        ty = Math.max(-maxY, Math.min(maxY, ty));
+      }
+
+      function zoomAt(clientX, clientY, delta) {
+        const prev = scale;
+        const next = Math.max(MIN, Math.min(MAX, scale + delta));
+        if (next === prev) return;
+        // Zoom toward cursor: compute the point under the cursor in image-local
+        // coords before zoom, then adjust translate so the same point stays
+        // under the cursor after zoom.
+        const rect = stage.getBoundingClientRect();
+        const cx = clientX - rect.left - rect.width / 2;
+        const cy = clientY - rect.top - rect.height / 2;
+        // Position of cursor relative to image center in current scale:
+        const ix = (cx - tx) / prev;
+        const iy = (cy - ty) / prev;
+        scale = next;
+        tx = cx - ix * scale;
+        ty = cy - iy * scale;
+        if (scale <= 1) { scale = 1; tx = 0; ty = 0; }
+        clampTranslate();
+        updateTransform();
+      }
+
+      function zoomCenter(delta) {
+        const rect = stage.getBoundingClientRect();
+        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, delta);
+      }
+
+      function open() {
+        lb.classList.add("open");
+        lb.setAttribute("aria-hidden", "false");
+        document.body.classList.add("lb-open");
+        scale = 1; tx = 0; ty = 0;
+        updateTransform();
+        back.focus();
+      }
+
+      function close() {
+        lb.classList.remove("open");
+        lb.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("lb-open");
+        scale = 1; tx = 0; ty = 0;
+        updateTransform();
+        trigger.focus();
+      }
+
+      trigger.addEventListener("click", open);
+      trigger.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+      });
+
+      back.addEventListener("click", close);
+      zoomIn.addEventListener("click", () => zoomCenter(STEP));
+      zoomOut.addEventListener("click", () => zoomCenter(-STEP));
+      reset.addEventListener("click", () => { scale = 1; tx = 0; ty = 0; updateTransform(); });
+
+      // Keyboard shortcuts while the lightbox is open
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "+" || e.key === "=") { e.preventDefault(); zoomCenter(STEP); }
+        else if (e.key === "-" || e.key === "_") { e.preventDefault(); zoomCenter(-STEP); }
+        else if (e.key === "0") { scale = 1; tx = 0; ty = 0; updateTransform(); }
+      });
+
+      // Mouse wheel to zoom
+      stage.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? STEP : -STEP;
+        zoomAt(e.clientX, e.clientY, delta);
+      }, { passive: false });
+
+      // Double-click to toggle zoom
+      stage.addEventListener("dblclick", (e) => {
+        if (scale > 1) { scale = 1; tx = 0; ty = 0; updateTransform(); }
+        else zoomAt(e.clientX, e.clientY, 1.5);
+      });
+
+      // Drag to pan (pointer events = mouse + touch + pen)
+      stage.addEventListener("pointerdown", (e) => {
+        if (scale <= 1) return;
+        dragging = true;
+        lastX = e.clientX; lastY = e.clientY;
+        stage.classList.add("dragging");
+        stage.setPointerCapture(e.pointerId);
+        updateTransform();
+      });
+      stage.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        tx += e.clientX - lastX;
+        ty += e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        clampTranslate();
+        img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      });
+      function endDrag(e) {
+        if (!dragging) return;
+        dragging = false;
+        stage.classList.remove("dragging");
+        try { stage.releasePointerCapture(e.pointerId); } catch (_) {}
+        updateTransform();
+      }
+      stage.addEventListener("pointerup", endDrag);
+      stage.addEventListener("pointercancel", endDrag);
+      stage.addEventListener("pointerleave", endDrag);
+
+      updateTransform();
+    })();
   </script>
 
 </body>
