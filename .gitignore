@@ -1,0 +1,15 @@
+# Source files (originals kept locally, published JPGs are what's deployed)
+*.pdf
+[0-9].png
+[0-9][0-9].png
+ASSEMBLY*.png
+CONCEPT.jpg
+FIRST FLOOR PLAN.png
+hero.png
+
+# Nested working dir
+/website/
+
+# OS cruft
+.DS_Store
+Thumbs.db
