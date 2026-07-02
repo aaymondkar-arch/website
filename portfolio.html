@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aayush Mondkar — Portfolio</title>
+  <meta name="description" content="Selected works by Aayush Mondkar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Detect landing-page entry before first paint so the loading screen blocks any flash -->
+  <script>if(sessionStorage.getItem('from-landing')){document.documentElement.dataset.loading='1'}</script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #121212;
+      --muted: #6b6b68;
+      --line: #e6e4df;
+      --accent: #121212;
+      --card: #ffffff;
+      --radius: 4px;
+      --max: 1440px;
+    }
+
+    *, *:hover, *:focus { cursor: none !important; }
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-snap-type: y mandatory;
+      scroll-padding-top: 72px;
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.6; transition: opacity 0.2s ease; }
+
+    body { padding-top: 72px; }
+
+    .wrap {
+      width: 100%;
+      padding: 0 56px;
+    }
+
+    /* ---------- LOADING SCREEN ---------- */
+    #loading-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #ffffff;
+      z-index: 9998;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      pointer-events: all;
+      transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-loading] #loading-screen { display: flex; }
+    #loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #loading-label {
+      font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: #6b6b68;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+    @keyframes hg-flip {
+      0%   { transform: rotate(0deg);   animation-timing-function: step-end; }
+      35%  { transform: rotate(0deg);   animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+      50%  { transform: rotate(180deg); animation-timing-function: step-end; }
+      85%  { transform: rotate(180deg); animation-timing-function: cubic-bezier(0.45, 0, 0.55, 1); }
+      100% { transform: rotate(360deg); }
+    }
+    .hg-icon {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: hg-flip 2.4s linear infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hg-icon { animation: none; }
+    }
+
+    /* ---------- CURSOR ---------- */
+    #cursor-el {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      user-select: none;
+      opacity: 0;
+      will-change: transform;
+    }
+
+    /* ---------- NAV (Win98) ---------- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #c0c0c0;
+      z-index: 50;
+      border-bottom: 2px solid #404040;
+    }
+    .win98-titlebar {
+      background: linear-gradient(to right, #4a4a4a 0%, #7a7a7a 100%);
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 4px 4px 8px;
+      user-select: none;
+    }
+    .win98-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      min-width: 0;
+      flex: 1;
+    }
+    .win98-icon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
+    .win98-controls { display: flex; gap: 2px; margin-left: 6px; flex-shrink: 0; }
+    .win98-btn {
+      width: 22px; height: 22px;
+      background: #c0c0c0;
+      border: 1px solid #000000;
+      box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080;
+      font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
+      font-size: 11px; font-weight: bold; line-height: 1;
+      color: #000000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 0 1px;
+    }
+    .win98-btn:active { box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #808080; }
+    .menubar {
+      padding: 2px 6px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border-top: 1px solid #ffffff;
+      border-bottom: 1px solid #808080;
+    }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #000000;
+      padding: 4px 12px;
+      letter-spacing: 0;
+      display: block;
+    }
+    .nav-links a:hover { background: #5a5a5a; color: #ffffff; opacity: 1; }
+    @media (max-width: 600px) {
+      .win98-title { font-size: 12px; }
+      .menubar { padding: 2px 4px; }
+    }
+
+    /* ---------- HERO ---------- */
+    header.hero {
+      height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      scroll-snap-align: start;
+    }
+    header.hero .wrap { width: 100%; }
+    .hero-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .hero-text { min-width: 0; }
+    .hero-text p {
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1.35;
+      color: var(--ink);
+      margin: 0 0 24px;
+    }
+    .hero-text p:last-of-type { margin-bottom: 0; }
+    .hero-video {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .hero-row { grid-template-columns: 1fr; gap: 40px; }
+      .hero-video { width: 100%; max-width: 420px; }
+    }
+
+    .eyes {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      justify-content: center;
+    }
+    .eyes pre {
+      margin: 0; padding: 0;
+      font-family: "JetBrains Mono", "Menlo", "Consolas", "Courier New", monospace;
+      font-size: 6px;
+      line-height: 1.0;
+      color: rgba(0, 0, 0, 0.92);
+      letter-spacing: 0;
+      white-space: pre;
+      pointer-events: none;
+      user-select: none;
+    }
+    @media (max-width: 900px) {
+      .eyes pre { font-size: 5px; }
+    }
+
+    /* ---------- ABOUT META ---------- */
+    .about-meta {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+    .about-meta .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .about-meta .row:last-child { border-bottom: none; }
+    .about-meta .row .k {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+    .about-meta .row .v { color: var(--ink); }
+
+    /* ---------- SECTIONS ---------- */
+    section#work,
+    section#contact {
+      height: calc(100vh - 72px);
+      display: flex;
+      flex-direction: column;
+      padding: 48px 0;
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+    section#contact .wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Work: stretch wrap + grid to fill the full available height */
+    section#work .wrap {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    #work h2 { flex-shrink: 0; margin-bottom: 20px; }
+    #work .grid {
+      flex: 1;
+      height: 0;
+      min-height: 0;
+      grid-template-rows: repeat(2, 1fr);
+      align-items: stretch;
+    }
+    #work .project { display: flex; flex-direction: column; min-height: 0; }
+    #work .project .thumb { flex: 1; min-height: 0; height: 0; }
+    #work .project .info { flex-shrink: 0; }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: "";
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+    }
+
+    h2 {
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.2;
+      letter-spacing: 0;
+      font-weight: 700;
+      margin: 0 0 32px;
+      max-width: 800px;
+      text-wrap: balance;
+    }
+
+    /* ---------- PROJECTS ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px 28px;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 20px; }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    .project { display: block; }
+    .project:hover { opacity: 1; }
+    .project .thumb {
+      width: 100%;
+      height: 180px;
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .project img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .project .thumb .placeholder {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .project .info {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .project h3 {
+      font-size: 13px;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .project .tag { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
+    .project p.desc { margin: 6px 0 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+    .p1 { background: linear-gradient(135deg, #f0ece4 0%, #d9d3c6 100%); }
+    .p2 { background: linear-gradient(135deg, #e7e9ec 0%, #c4c9d1 100%); }
+    .p3 { background: linear-gradient(135deg, #ece4e4 0%, #d1bfbf 100%); }
+    .p4 { background: linear-gradient(135deg, #e4ecea 0%, #b8c9c5 100%); }
+    .p5 { background: linear-gradient(135deg, #efece2 0%, #ccc49f 100%); }
+    .p6 { background: linear-gradient(135deg, #e6e0ec 0%, #bfb3cf 100%); }
+
+    /* ---------- CONTACT ---------- */
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+    }
+    #contact-title {
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin: 0 0 32px;
+      overflow-wrap: break-word;
+      word-break: normal;
+    }
+    .socials { font-size: 14px; color: var(--muted); }
+    .socials .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .socials .row:last-child { border-bottom: none; }
+    .socials .row a { color: var(--ink); font-weight: 700; }
+    .socials .row .k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
+    @media (max-width: 800px) { .contact { grid-template-columns: 1fr; gap: 48px; } }
+
+    /* ---------- FOOTER ---------- */
+    footer { display: none; }
+
+    /* ---------- REVEAL ---------- */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .reveal.visible { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ================================================================
+       SCATTER — self-contained card fan for #work.
+       All rules are #work / .sc-* scoped; nothing outside is touched.
+       Timing knobs live on #work so every value is in one place.
+       ================================================================ */
+
+    #work {
+      --sc-anim-dur:   550ms;                         /* each card's fly duration  */
+      --sc-stagger:     55ms;                         /* delay added per card      */
+      --sc-ease: cubic-bezier(0.22, 1, 0.36, 1);     /* expo-out feel             */
+      --sc-hover-dur:  200ms;                         /* overlay / scale fade time */
+      --sc-card-w:     min(460px, calc(33vw - 40px));  /* card width — 3 cols max   */
+      --sc-card-w-mob: 240px;                         /* card width on mobile      */
+      position: relative;                             /* contain absolute stage    */
+    }
+
+    /* Stage: fills section, clips card overflow */
+    #scatter-stage {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    /* Wrap: JS drives translate + rotate here (separate from hover scale) */
+    .sc-wrap {
+      position: absolute;
+      left: 0; top: 0;
+      width: var(--sc-card-w);
+      z-index: 1;
+      opacity: 0;           /* hidden until JS sets initial position on load */
+    }
+    .sc-wrap.sc-live:hover { z-index: 10; }
+
+    .sc-link { display: block; text-decoration: none; color: inherit; }
+    .sc-link:hover { opacity: 1; }
+
+    /* Card face: CSS drives hover scale here */
+    .sc-card {
+      width: 100%;
+      border-radius: 0;
+      overflow: hidden;
+      background: var(--card, #fff);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px var(--line, #e6e4df);
+      transition: transform var(--sc-hover-dur) ease,
+                  box-shadow var(--sc-hover-dur) ease;
+      transform: scale(1);
+      position: relative;
+    }
+    .sc-wrap.sc-live:hover .sc-card {
+      transform: scale(1.04);
+    }
+
+    .sc-thumb { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; }
+    .sc-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sc-thumb .sc-placeholder { width: 100%; height: 100%; }
+
+    /* Frosted overlay; solid fallback for browsers without backdrop-filter */
+    .sc-overlay {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      backdrop-filter: none;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 16px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity var(--sc-hover-dur) ease;
+      pointer-events: none;
+    }
+    .sc-wrap.sc-live:hover .sc-overlay { opacity: 1; }
+    .sc-overlay-title {
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700;
+      font-size: 16px; /* replaced per-card by fitOverlayFonts() */
+      line-height: 1.05;
+      color: #000000;
+      text-align: left;
+      display: block;
+      width: 100%;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    @media (max-width: 768px) {
+      .sc-wrap { width: var(--sc-card-w-mob); }
+    }
+
+    /* Reduced motion: skip animation entirely, show a static CSS grid */
+    @media (prefers-reduced-motion: reduce) {
+      #work { overflow: auto !important; }
+      #scatter-stage {
+        position: static !important;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
+        padding: 0 56px 48px !important;
+        overflow: visible !important;
+        height: auto !important;
+      }
+      .sc-wrap {
+        position: static !important;
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        width: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Windows NT loading screen (shown when arriving from landing.html) -->
+  <div id="loading-screen" role="status" aria-label="Loading">
+    <svg class="hg-icon" width="52" viewBox="0 0 50 58" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Top cap -->
+      <rect x="4" y="2" width="42" height="6" fill="#121212" rx="1"/>
+      <!-- Sand in top half (filled triangle) -->
+      <polygon points="4,8 46,8 25,27" fill="#121212"/>
+      <!-- Waist connector -->
+      <rect x="23" y="27" width="4" height="4" fill="#121212"/>
+      <!-- Bottom half empty (outline only) -->
+      <polygon points="25,31 4,50 46,50" fill="none" stroke="#121212" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- Bottom cap -->
+      <rect x="4" y="50" width="42" height="6" fill="#121212" rx="1"/>
+    </svg>
+    <span id="loading-label">Please wait...</span>
+  </div>
+
+  <!-- Windows NT cursor -->
+  <div id="cursor-el" aria-hidden="true">
+    <svg width="16" height="23" viewBox="0 0 16 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 1 1 L 1 15 L 5.5 10.5 L 10 19.5 L 12 18.5 L 7.5 9.5 L 13.5 9.5 Z"
+            fill="white" stroke="black" stroke-width="1.5"
+            stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <nav>
+    <div class="win98-titlebar">
+      <div class="win98-title">
+        <svg class="win98-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="14" height="11" fill="#fff" stroke="#000" stroke-width="1"/>
+          <rect x="2" y="2" width="12" height="3" fill="#5a5a5a"/>
+          <rect x="4" y="5" width="8" height="6" fill="#c0c0c0"/>
+          <rect x="5" y="12" width="6" height="2" fill="#c0c0c0"/>
+          <rect x="2" y="14" width="12" height="1" fill="#404040"/>
+        </svg>
+        <span>Aayush Mondkar — Portfolio</span>
+      </div>
+      <div class="win98-controls">
+        <button class="win98-btn" aria-label="Minimize" tabindex="-1">_</button>
+        <button class="win98-btn" aria-label="Maximize" tabindex="-1">□</button>
+        <button class="win98-btn" aria-label="Close" tabindex="-1">✕</button>
+      </div>
+    </div>
+    <div class="menubar">
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="about">
+    <div class="wrap">
+      <div class="hero-row">
+        <div class="hero-text">
+          <p>Trained as an architect, wired as an artist. I move between structure and sensation, drawing from the full spectrum of human creativity: the tension in a film frame, the weight of a typeface, the silence between notes, the story a photograph refuses to explain.</p>
+          <p>Architecture taught me that every constraint is a question, and every question has an answer worth finding. That instinct, to solve, to untangle, to make something work and mean something, travels with me into every field I touch.</p>
+          <p>For me, design is never just form following function. It's form following feeling, shaped by everything seen, heard, worn, and wondered about.</p>
+          <p>I build environments. But first, I pay attention.</p>
+          <div class="about-meta" style="margin-top: 32px;">
+            <div class="row"><span class="k">Based in</span><span class="v">Amherst, MA, USA</span></div>
+            <div class="row"><span class="k">Focus</span><span class="v">Architecture</span></div>
+          </div>
+        </div>
+        <div class="hero-video">
+          <video src="website lol.mp4" autoplay muted loop playsinline></video>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="work">
+    <div id="scatter-stage">
+      <!-- .sc-wrap cards injected by the scatter script below -->
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div class="eyes" aria-hidden="true">
+          <pre id="eye-l"></pre>
+          <pre id="eye-r"></pre>
+        </div>
+        <div class="contact-right">
+          <p id="contact-title">Please find me</p>
+          <div class="socials">
+            <div class="row"><span class="k">Instagram</span><span style="font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:700;">don't have one lol</span></div>
+            <div class="row"><span class="k">LinkedIn</span><a href="#" target="_blank" rel="noopener">/aayushmondkar</a></div>
+            <div class="row"><span class="k">Read.cv</span><a href="#" target="_blank" rel="noopener">/yourname</a></div>
+            <div class="row"><span class="k">CV</span><a href="cv.html">/cv</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div>© <span id="year"></span> Aayush Mondkar. All rights reserved.</div>
+      <div>Made with care.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ---------- Loading screen (arriving from landing.html) ----------
+    (function () {
+      if (!document.documentElement.dataset.loading) return;
+      sessionStorage.removeItem('from-landing');
+      // NOTE: do NOT delete dataset.loading here — the CSS rule
+      // [data-loading] #loading-screen keeps the screen visible until we're done.
+      const screen = document.getElementById('loading-screen');
+      if (!screen) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        screen.remove();
+        delete document.documentElement.dataset.loading;
+        return;
+      }
+      // Show hourglass for 1.6s then fade out over 500ms
+      setTimeout(() => {
+        screen.classList.add('fade-out');
+        setTimeout(() => {
+          screen.remove();
+          delete document.documentElement.dataset.loading;
+        }, 540);
+      }, 1600);
+    })();
+
+    // ---------- Windows NT cursor ----------
+    (function () {
+      const cursorEl = document.getElementById('cursor-el');
+      if (!cursorEl) return;
+      let cursorVisible = false;
+      document.addEventListener('mousemove', (e) => {
+        if (!cursorVisible) { cursorEl.style.opacity = '1'; cursorVisible = true; }
+        cursorEl.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }, { passive: true });
+    })();
+
+
+    // ---------- Hero text — fit to video height ----------
+    (function () {
+      const heroText  = document.querySelector('.hero-text');
+      const heroVideo = document.querySelector('.hero-video');
+      if (!heroText || !heroVideo) return;
+      const paras = heroText.querySelectorAll('p');
+
+      function fit() {
+        if (window.innerWidth <= 900) {
+          paras.forEach(p => p.style.fontSize = '');
+          return;
+        }
+        const targetH = heroVideo.offsetHeight;
+        if (targetH < 10) return;
+        let lo = 10, hi = 300;
+        for (let i = 0; i < 24; i++) {
+          const mid = (lo + hi) / 2;
+          paras.forEach(p => p.style.fontSize = mid + 'px');
+          if (heroText.offsetHeight <= targetH) lo = mid; else hi = mid;
+        }
+        paras.forEach(p => p.style.fontSize = Math.floor(lo) + 'px');
+      }
+
+      if (document.readyState === 'complete') fit();
+      else window.addEventListener('load', fit, { once: true });
+      window.addEventListener('resize', fit);
+    })();
+
+    // ---------- Full-page snap scroll ----------
+    (function () {
+      const sections = Array.from(
+        document.querySelectorAll('header.hero, section#work, section#contact')
+      );
+      if (!sections.length) return;
+
+      const NAV_H = 72;
+      let current = 0;
+      let locked = false;
+
+      function targetScrollTop(idx) {
+        return Math.max(0, sections[idx].offsetTop - NAV_H);
+      }
+
+      function goTo(idx) {
+        if (locked || idx < 0 || idx >= sections.length) return;
+        locked = true;
+        const prev = current;
+        current = idx;
+        window.scrollTo({ top: targetScrollTop(idx), behavior: 'smooth' });
+        // Trigger any reveal animations inside the destination section
+        sections[idx].querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+        window.dispatchEvent(new CustomEvent('snap-goto', { detail: { from: prev, to: idx } }));
+        setTimeout(() => { locked = false; }, 850);
+      }
+
+      // Single scroll gesture = one section at a time
+      document.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY > 10) goTo(current + 1);
+        else if (e.deltaY < -10) goTo(current - 1);
+      }, { passive: false });
+
+      // Keyboard
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+        if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); goTo(current - 1); }
+      });
+
+      // Touch
+      let touchY = 0;
+      document.addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });
+      document.addEventListener('touchend', (e) => {
+        const dy = touchY - e.changedTouches[0].clientY;
+        if (dy >  55) goTo(current + 1);
+        if (dy < -55) goTo(current - 1);
+      }, { passive: true });
+
+      // Keep current index in sync when nav links are clicked
+      window.addEventListener('scroll', () => {
+        const mid = window.scrollY + NAV_H + 10;
+        sections.forEach((s, i) => { if (s.offsetTop <= mid) current = i; });
+      }, { passive: true });
+
+      // Trigger reveals for the first section immediately
+      sections[0].querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    })();
+
+    // ---------- Reveal on scroll ----------
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    // ---------- Smooth scroll ----------
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href");
+        if (!href || href === "#") return;
+        const target = document.querySelector(href);
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      });
+    });
+
+    // ---------- ASCII eyes ----------
+    (function () {
+      const eyeL = document.getElementById("eye-l");
+      const eyeR = document.getElementById("eye-r");
+      if (!eyeL || !eyeR) return;
+
+      const W = 110, H = 36;
+      const RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+      const ASPECT = 1.85;
+      const TILT = 7.0;
+      const EYE_H_FACTOR = 0.165;
+      const BOT_FACTOR = 0.52;
+      const LASH_TOP_REACH = 8.5;
+      const LASH_BOT_REACH = 4.5;
+
+      function hash(x, y) {
+        const s = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+        return s - Math.floor(s);
+      }
+      function noise(x, y) {
+        const ix = Math.floor(x), iy = Math.floor(y);
+        const fx = x - ix, fy = y - iy;
+        const a = hash(ix, iy), b = hash(ix + 1, iy);
+        const c = hash(ix, iy + 1), d = hash(ix + 1, iy + 1);
+        const u = fx * fx * (3 - 2 * fx), v = fy * fy * (3 - 2 * fy);
+        return a*(1-u)*(1-v) + b*u*(1-v) + c*(1-u)*v + d*u*v;
+      }
+
+      function brightness(x, y, px, py, tilt) {
+        const cx = W / 2;
+        const dxe = x - cx;
+        const cyEyeBase = H * 0.56;
+        const eyeW = W * 0.46;
+        const eyeH = H * EYE_H_FACTOR;
+        if (Math.abs(dxe) >= eyeW + 1) return -1;
+        if (Math.abs(dxe) < eyeW) {
+          const dxn = dxe / eyeW;
+          const cyEye = cyEyeBase - tilt * dxn * TILT;
+          const peakShift = tilt * 0.18;
+          const dxnUp = dxn - peakShift;
+          const arcTop = Math.pow(Math.max(0, 1 - dxnUp * dxnUp * 1.06), 0.50);
+          const arcBot = Math.pow(Math.max(0, 1 - dxn * dxn), 0.72);
+          const yTop = cyEye - eyeH * arcTop;
+          const yBot = cyEye + eyeH * BOT_FACTOR * arcBot;
+          if (Math.abs(y - yTop) < 1.5) return 0.96;
+          if (y < yTop && y > yTop - LASH_TOP_REACH) {
+            const reach = (yTop - y) / LASH_TOP_REACH;
+            const outerWeight = tilt > 0 ? Math.max(0, dxn) : Math.max(0, -dxn);
+            const lateralSlant = dxn * 1.55 + tilt * (0.75 + outerWeight * 1.95);
+            const phase = x * 1.38 + lateralSlant * (yTop - y) * 1.80;
+            const lash = Math.sin(phase);
+            const density = Math.max(0, 1 - reach * 0.76);
+            const outerBoost = 0.54 + outerWeight * 0.68;
+            if (lash > 0.36 - density * 0.24 && density > 0.04) return 0.56 + 0.40 * density * outerBoost;
+            if (lash > 0.08 && reach < 0.64 && noise(x * 1.42, y * 0.88) > 0.49) return 0.28 + 0.30 * density;
+            return -1;
+          }
+          if (y >= yTop - 0.2 && y <= yBot + 0.2) {
+            const dxi = (x - cx) - px;
+            const dyi = (y - cyEye) * ASPECT - py;
+            const ri = Math.sqrt(dxi*dxi + dyi*dyi);
+            const irisR = Math.min(eyeH * ASPECT * 1.65, eyeW * 0.43);
+            const pupilR = irisR * 0.35;
+            const limbalR = irisR * 0.90;
+            if (ri < pupilR) {
+              const hx1 = dxi + pupilR * 0.42, hy1 = dyi + pupilR * 0.42;
+              const rh1 = Math.sqrt(hx1*hx1 + hy1*hy1);
+              const hx2 = dxi - pupilR * 0.56, hy2 = dyi - pupilR * 0.26;
+              const rh2 = Math.sqrt(hx2*hx2 + hy2*hy2);
+              if (rh1 < pupilR * 0.27) return 0.02;
+              if (rh1 < pupilR * 0.40) return 0.08 + (rh1 - pupilR*0.27)/(pupilR*0.13) * 0.36;
+              if (rh2 < pupilR * 0.13) return 0.05;
+              return 0.93 + 0.06 * (1 - ri / pupilR);
+            }
+            if (ri >= limbalR && ri < irisR) {
+              const t = (ri - limbalR) / (irisR - limbalR);
+              return 0.78 + 0.18 * t;
+            }
+            if (ri < limbalR) {
+              const ang = Math.atan2(dyi, dxi);
+              const s1 = Math.cos(ang * 32 + ri * 2.2) * 0.16;
+              const s2 = Math.cos(ang * 16 - ri * 1.3) * 0.10;
+              const s3 = Math.cos(ang *  8 + ri * 0.7) * 0.07;
+              const s4 = noise(ang * 5.0, ri * 2.8) * 0.10;
+              const s5 = noise(ang * 2.2, ri * 1.4) * 0.06;
+              const inCollar = ri > pupilR * 1.08 && ri < pupilR * 1.72;
+              const collarFactor = inCollar ? 1.45 : 1.0;
+              let irisI = 0.36 + (s1 + s2 + s3 + s4 + s5) * collarFactor;
+              if (ri < pupilR * 1.14) {
+                const t = (pupilR * 1.14 - ri) / (pupilR * 0.14);
+                irisI = irisI * (1 - t) + 0.80 * t;
+              }
+              irisI += Math.max(0, (yTop + 2.5 - y) / 4.5) * 0.14;
+              return Math.max(0.18, Math.min(0.78, irisI));
+            }
+            const innerCornerX = -tilt * eyeW * 0.94;
+            const distToCanthus = Math.sqrt((dxe - innerCornerX)**2 + ((y - cyEye) * ASPECT)**2);
+            if (distToCanthus < eyeW * 0.065) return 0.44 + 0.16 * (1 - distToCanthus / (eyeW * 0.065));
+            const distFromCenter = Math.abs(dxe) / eyeW;
+            const cornerShadow = Math.pow(distFromCenter, 3.5) * 0.22;
+            const upperShadow = Math.max(0, 1 - (y - yTop) / 3.5) * 0.16;
+            const vein = Math.max(0, noise(x * 0.35, y * 0.55) - 0.68) * 0.45;
+            return 0.04 + cornerShadow + upperShadow + vein;
+          }
+          if (Math.abs(y - yBot) < 0.75) return 0.54 + 0.16 * (1 - Math.abs(y - yBot));
+          if (y > yBot && y < yBot + LASH_BOT_REACH) {
+            const reach = (y - yBot) / LASH_BOT_REACH;
+            const outerWeight = tilt > 0 ? Math.max(0, dxn) : Math.max(0, -dxn);
+            const slant = dxn * 1.1 + tilt * 0.5;
+            const phase = x * 1.55 + slant * (y - yBot) * 1.5;
+            const lash = Math.sin(phase);
+            const density = Math.max(0, 1 - reach * 1.05);
+            if (lash > 0.50 && density > 0.04) return 0.42 + 0.32 * density * (0.65 + outerWeight * 0.55);
+            if (lash > 0.18 && reach < 0.50 && noise(x * 1.5, y * 0.75) > 0.56) return 0.22 + 0.24 * density;
+            return -1;
+          }
+        }
+        return -1;
+      }
+
+      function renderEye(px, py, tilt) {
+        const lines = new Array(H);
+        for (let y = 0; y < H; y++) {
+          let row = "";
+          for (let x = 0; x < W; x++) {
+            const d = brightness(x, y, px, py, tilt);
+            if (d < 0) { row += " "; continue; }
+            const dd = d > 1 ? 1 : d;
+            row += RAMP[Math.floor(dd * (RAMP.length - 1))];
+          }
+          lines[y] = row;
+        }
+        return lines.join("\n");
+      }
+
+      let pendingFrame = false, lastE = null;
+      const state = { l: { px: 0, py: 0 }, r: { px: 0, py: 0 } };
+      const MAX_PX = 12.0, MAX_PY = 8.5;
+
+      function targetOffset(eyeEl, e) {
+        const rect = eyeEl.getBoundingClientRect();
+        const ex = rect.left + rect.width / 2, ey = rect.top + rect.height / 2;
+        const dx = e.clientX - ex, dy = e.clientY - ey;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const corners = [[0,0],[window.innerWidth,0],[0,window.innerHeight],[window.innerWidth,window.innerHeight]];
+        let maxR = Infinity;
+        for (const [cx, cy] of corners) maxR = Math.min(maxR, Math.hypot(cx - ex, cy - ey));
+        if (!isFinite(maxR) || maxR < 1) maxR = 200;
+        const t = Math.min(1, dist / maxR);
+        const ang = Math.atan2(dy, dx);
+        return { px: Math.cos(ang) * t * MAX_PX, py: Math.sin(ang) * t * MAX_PY };
+      }
+
+      function tick() {
+        pendingFrame = false;
+        if (!lastE) return;
+        const tl = targetOffset(eyeL, lastE), tr = targetOffset(eyeR, lastE);
+        state.l.px += (tl.px - state.l.px) * 0.32; state.l.py += (tl.py - state.l.py) * 0.32;
+        state.r.px += (tr.px - state.r.px) * 0.32; state.r.py += (tr.py - state.r.py) * 0.32;
+        eyeL.textContent = renderEye(state.l.px, state.l.py, -1);
+        eyeR.textContent = renderEye(state.r.px, state.r.py, +1);
+      }
+
+      function onMove(e) {
+        lastE = e;
+        if (!pendingFrame) { pendingFrame = true; requestAnimationFrame(tick); }
+      }
+
+      eyeL.textContent = renderEye(0, 0, -1);
+      eyeR.textContent = renderEye(0, 0, +1);
+      window.addEventListener("mousemove", onMove, { passive: true });
+      function idleTick() { if (lastE) tick(); requestAnimationFrame(idleTick); }
+      requestAnimationFrame(idleTick);
+    })();
+
+    // ---------- "Please find me" — fit title to section height ----------
+    (function () {
+      const el = document.getElementById('contact-title');
+      if (!el) return;
+
+      function fit() {
+        const section = document.getElementById('contact');
+        const socialsEl = document.querySelector('.contact-right .socials');
+        const availH = section.clientHeight - 96 - (socialsEl ? socialsEl.offsetHeight + 32 : 0);
+        if (availH < 20) return;
+        let lo = 10, hi = 600;
+        for (let i = 0; i < 20; i++) {
+          const mid = (lo + hi) / 2;
+          el.style.fontSize = mid + 'px';
+          if (el.offsetHeight <= availH) lo = mid; else hi = mid;
+        }
+        el.style.fontSize = Math.floor(lo) + 'px';
+      }
+
+      fit();
+      window.addEventListener('resize', fit);
+    })();
+
+    // ---------- Scatter — card fan for #work ----------
+    (function () {
+      'use strict';
+
+      /* Project data ------------------------------------------------- */
+      const PROJECTS = [
+        { title: 'Botanical Garden',                       thumb: 'thumb-1.jpg', href: 'project-1.html' },
+        { title: 'Adaptive Reuse of Paper Mill Buildings', thumb: 'thumb-2.jpg', href: 'project-2.html' },
+        { title: 'Building Performance',                   thumb: 'thumb-3.jpg', href: 'project-3.html' },
+        { title: 'Affordable Housing',                     thumb: 'thumb-4.jpg', href: 'project-4.html' },
+        { title: 'National Institute of Design',           thumb: 'thumb-5.jpg', href: 'project-5.html' },
+        { title: 'Urban Artificial Intelligence',          thumb: 'thumb-6.jpg', href: 'project-6.html' },
+      ];
+
+      /* Timing — keep in sync with CSS --sc-* knobs on #work --------- */
+      const ANIM_MS    = 550;   // each card's fly duration
+      const STAGGER_MS =  55;   // extra delay per card index
+      const SETTLE_BUF =  80;   // ms after last card lands before hover activates
+      const EASE = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+      /* Position constants ------------------------------------------- */
+      const PAD          = 28;   // min gap from stage edges (px)
+      const CARD_GAP     = 20;   // min gap between card bounding boxes
+      const TOP_RESERVE  =  56;  // y clearance from top edge — keeps cards clear of nav
+      const INIT_XY      = 28;   // max random offset from center in stacked hand
+      const INIT_R       =  8;   // max ° rotation in stacked state
+      const SCAT_R       = 15;   // max ° rotation in scattered state
+
+      /* Seeded xorshift32 — same seed → same positions every load ----- */
+      function makeRng(seed) {
+        let s = seed >>> 0;
+        return () => { s ^= s << 13; s ^= s >> 17; s ^= s << 5; return (s >>> 0) / 0xFFFFFFFF; };
+      }
+
+      /* DOM ---------------------------------------------------------- */
+      const stage   = document.getElementById('scatter-stage');
+      const section = document.getElementById('work');
+      if (!stage || !section) return;
+
+      /* CSS handles the static grid; skip all animation logic */
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      /* Build card DOM and inject into stage */
+      const wraps = PROJECTS.map((p) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'sc-wrap';
+
+        const a = document.createElement('a');
+        a.className = 'sc-link';
+        a.href = p.href;
+
+        const card = document.createElement('div');
+        card.className = 'sc-card';
+
+        const thumb = document.createElement('div');
+        thumb.className = 'sc-thumb';
+        if (p.thumb) {
+          const img = document.createElement('img');
+          img.src = p.thumb;
+          img.alt = p.title;
+          thumb.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'sc-placeholder ' + (p.bg || '');
+          thumb.appendChild(ph);
+        }
+        card.appendChild(thumb);
+
+        const overlay = document.createElement('div');
+        overlay.className = 'sc-overlay';
+        const ot = document.createElement('span');
+        ot.className = 'sc-overlay-title';
+        ot.textContent = p.title;
+        overlay.appendChild(ot);
+        card.appendChild(overlay);
+
+        a.appendChild(card);
+        wrap.appendChild(a);
+        stage.appendChild(wrap);
+        return wrap;
+      });
+
+      /* Stored positions — seeded once, never change during a session  */
+      let initPos = null;
+      let scatPos = null;
+
+      function stageDims() {
+        return { sw: stage.offsetWidth, sh: stage.offsetHeight,
+                 cw: wraps[0].offsetWidth, ch: wraps[0].offsetHeight };
+      }
+
+      /* Seeded — stacked hand looks the same every page load */
+      function calcInitPos() {
+        const { sw, sh, cw, ch } = stageDims();
+        const cx = (sw - cw) / 2;
+        const cy = (sh - ch) / 2;
+        const rI = makeRng(7);
+        initPos = wraps.map(() => ({
+          x:   cx + (rI() * 2 - 1) * INIT_XY,
+          y:   cy + (rI() * 2 - 1) * INIT_XY,
+          rot: (rI() * 2 - 1) * INIT_R,
+        }));
+      }
+
+      /* Per-card overlay font sizing — binary-search the max font that fits */
+      function fitOverlayFonts() {
+        wraps.forEach((w) => {
+          const overlay = w.querySelector('.sc-overlay');
+          const title   = w.querySelector('.sc-overlay-title');
+          if (!overlay || !title) return;
+          const maxW = overlay.clientWidth  - 32;
+          const maxH = overlay.clientHeight - 32;
+          let lo = 8, hi = 600;
+          for (let n = 0; n < 28; n++) {
+            const mid = (lo + hi) / 2;
+            title.style.fontSize = mid + 'px';
+            if (title.scrollWidth <= maxW && title.scrollHeight <= maxH) lo = mid; else hi = mid;
+          }
+          title.style.fontSize = Math.floor(lo) + 'px';
+        });
+      }
+
+      /* Fresh layout on every scatter trigger — guaranteed no overlap.
+         Stage is divided into a 3×2 grid; each card claims one unique cell,
+         then lands at a random spot within that cell. The cell assignment is
+         Fisher-Yates shuffled so which card ends up where changes every time. */
+      function calcScatPos() {
+        const { sw, sh, cw, ch } = stageDims();
+        const COLS = 3, ROWS = 2;
+
+        const areaW  = sw - PAD * 2;
+        const areaH  = sh - TOP_RESERVE - PAD;
+        const cellW  = areaW / COLS;
+        const cellH  = areaH / ROWS;
+
+        /* How much a card can wander inside its cell without touching the boundary */
+        const jX = Math.max(0, cellW - cw - CARD_GAP);
+        const jY = Math.max(0, cellH - ch - CARD_GAP);
+
+        /* Shuffle cell indices so the card-to-cell assignment is random */
+        const cells = Array.from({ length: COLS * ROWS }, (_, i) => i);
+        for (let i = cells.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [cells[i], cells[j]] = [cells[j], cells[i]];
+        }
+
+        scatPos = wraps.map((_, i) => {
+          const col = cells[i] % COLS;
+          const row = Math.floor(cells[i] / COLS);
+          const x = PAD + col * cellW + Math.random() * jX;
+          const y = TOP_RESERVE + row * cellH + Math.random() * jY;
+          return { x, y, rot: (Math.random() * 2 - 1) * SCAT_R };
+        });
+      }
+
+      /* Transform helpers -------------------------------------------- */
+      function tf({ x, y, rot }) { return `translate(${x}px,${y}px) rotate(${rot}deg)`; }
+
+      /* Apply a position without animation (forces a reflow to commit) */
+      function instant(wrap, pos) {
+        wrap.style.transition = 'none';
+        wrap.style.transform  = tf(pos);
+        wrap.getBoundingClientRect();   // flush reflow so 'none' sticks
+      }
+
+      /* State machine: 'stacked' → 'flying' → 'scattered' ------------ */
+      let phase = 'stacked';
+      let flyTimer = null;
+
+      function toStack() {
+        if (flyTimer) { clearTimeout(flyTimer); flyTimer = null; }
+        phase = 'stacked';
+        wraps.forEach((w, i) => {
+          w.classList.remove('sc-live');
+          w.style.transition = `transform ${ANIM_MS}ms ${EASE} ${i * STAGGER_MS}ms`;
+          w.style.transform  = tf(initPos[i]);
+        });
+      }
+
+      function toScatter() {
+        if (phase !== 'stacked') return;
+        calcScatPos();   // fresh random layout on every entry
+        phase = 'flying';
+
+        wraps.forEach((w, i) => {
+          /* Each card gets its own stagger delay so they fan out sequentially */
+          w.style.transition = `transform ${ANIM_MS}ms ${EASE} ${i * STAGGER_MS}ms`;
+          w.style.transform  = tf(scatPos[i]);
+        });
+
+        /* Enable hover only after the last card has fully settled */
+        const lastSettles = (wraps.length - 1) * STAGGER_MS + ANIM_MS + SETTLE_BUF;
+        flyTimer = setTimeout(() => {
+          phase = 'scattered';
+          wraps.forEach(w => w.classList.add('sc-live'));
+          flyTimer = null;
+        }, lastSettles);
+      }
+
+      /* Initial render ----------------------------------------------- */
+      function init() {
+        calcInitPos();
+        wraps.forEach((w, i) => { instant(w, initPos[i]); w.style.opacity = '1'; });
+        fitOverlayFonts();
+        /* the anchor scroll may already be applied with no further scroll
+           events coming - check once now */
+        requestAnimationFrame(scatterIfInView);
+      }
+      if (document.readyState === 'complete') init();
+      else window.addEventListener('load', init, { once: true });
+
+      window.addEventListener('resize', () => {
+        calcInitPos();
+        fitOverlayFonts();
+        if      (phase === 'stacked')   wraps.forEach((w, i) => instant(w, initPos[i]));
+        else if (phase === 'scattered') wraps.forEach((w, i) => instant(w, scatPos[i]));
+        /* phase 'flying': let finish; new scatter positions generate on next entry */
+      });
+
+      /* snap-goto: fired by the snap-scroll goTo() on every section change.
+         Section indices: 0 = about, 1 = work, 2 = contact              */
+      window.addEventListener('snap-goto', (e) => {
+        const { from, to } = e.detail;
+        if (to === 1 && from === 0) toScatter();  // about → work: scatter
+        if (from === 1 && to === 0) toStack();    // work → about: re-stack so next entry re-randomises
+      });
+
+      /* Hash landings (portfolio.html#work), back/forward restores, and
+         scrollbar drags all apply their scroll asynchronously - a one-shot
+         check races the browser. Instead: whenever the work section is in
+         view while cards are still stacked, fan them out. A short quiet
+         period after each snap transition stops the re-stack on leaving
+         the section from being immediately undone. */
+      let snapQuietUntil = 0;
+      window.addEventListener('snap-goto', () => { snapQuietUntil = Date.now() + 900; });
+
+      function scatterIfInView() {
+        if (phase !== 'stacked') return;
+        if (Date.now() < snapQuietUntil) return;
+        if (!initPos) return;   // not initialised yet
+        const mid = window.scrollY + 72 + 10;
+        if (section.offsetTop <= mid) toScatter();
+      }
+      window.addEventListener('scroll', scatterIfInView, { passive: true });
+      window.addEventListener('hashchange', () => requestAnimationFrame(scatterIfInView));
+      window.addEventListener('pageshow', () => {
+        requestAnimationFrame(() => requestAnimationFrame(scatterIfInView));
+      });
+    })();
+  </script>
+
+</body>
+</html>

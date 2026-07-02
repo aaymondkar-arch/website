@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aayush Mondkar - CV</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #121212;
+      --radius: 4px;
+    }
+
+    *, *:hover, *:focus { cursor: none !important; }
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg); color: var(--ink);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 700; -webkit-font-smoothing: antialiased; height: 100%;
+    }
+    body { display: flex; flex-direction: column; height: 100vh; }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { opacity: 0.6; transition: opacity 0.2s ease; }
+
+    #cursor-el {
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      user-select: none; opacity: 0; will-change: transform;
+    }
+
+    nav { background: #c0c0c0; border-bottom: 2px solid #404040; flex-shrink: 0; }
+    .win98-titlebar {
+      background: linear-gradient(to right, #4a4a4a 0%, #7a7a7a 100%);
+      height: 32px; display: flex; align-items: center;
+      justify-content: space-between; padding: 4px 4px 4px 8px; user-select: none;
+    }
+    .win98-title {
+      display: flex; align-items: center; gap: 6px; color: #fff;
+      font-family: "Tahoma","MS Sans Serif",Arial,sans-serif;
+      font-size: 13px; font-weight: 700; white-space: nowrap;
+      overflow: hidden; min-width: 0; flex: 1;
+    }
+    .win98-icon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
+    .win98-controls { display: flex; gap: 2px; margin-left: 6px; flex-shrink: 0; }
+    .win98-btn {
+      width: 22px; height: 22px; background: #c0c0c0;
+      border: 1px solid #000;
+      box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+      font-family: "MS Sans Serif","Tahoma",Arial,sans-serif;
+      font-size: 11px; font-weight: bold; line-height: 1; color: #000;
+      display: flex; align-items: center; justify-content: center; padding: 0 0 1px;
+    }
+    .win98-btn:active { box-shadow: inset -1px -1px 0 #fff, inset 1px 1px 0 #808080; }
+    .menubar {
+      padding: 2px 6px; height: 38px; display: flex; align-items: center;
+      border-top: 1px solid #fff; border-bottom: 1px solid #808080;
+    }
+    .nav-links a {
+      font-family: "MS Sans Serif","Tahoma",Arial,sans-serif;
+      font-size: 14px; font-weight: 400; color: #000;
+      padding: 4px 12px; letter-spacing: 0; display: block;
+    }
+    .nav-links a:hover { background: #5a5a5a; color: #fff; opacity: 1; }
+
+    .cv-stage {
+      flex: 1; min-height: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    #cv-border {
+      border: 2px solid var(--ink); border-radius: var(--radius);
+      background: #fff; position: relative; z-index: 5;
+      line-height: 0; flex-shrink: 0;
+    }
+    #cv-img {
+      display: block;
+      max-width: calc(100vw - 40px);
+      max-height: calc(100vh - 110px);
+      width: auto; height: auto;
+      border-radius: calc(var(--radius) - 1px);
+    }
+
+    #ascii-man {
+      position: fixed; z-index: 10;
+      pointer-events: none; user-select: none;
+      will-change: transform;
+      transition: left 0.09s linear, top 0.09s linear;
+    }
+    #ascii-man pre {
+      margin: 0; padding: 0;
+      font-family: "JetBrains Mono","Menlo","Consolas","Courier New",monospace;
+      font-size: 10px;
+      line-height: 1.0;
+      color: var(--ink); white-space: pre; background: transparent;
+    }
+
+    #ascii-bubble {
+      position: fixed; z-index: 12;
+      pointer-events: none; user-select: none; display: none;
+    }
+    #ascii-bubble pre {
+      margin: 0; padding: 0;
+      font-family: "JetBrains Mono","Menlo","Consolas","Courier New",monospace;
+      font-size: 11px; line-height: 1.4;
+      color: var(--ink); white-space: pre; background: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-el" aria-hidden="true">
+    <svg width="16" height="23" viewBox="0 0 16 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 1 1 L 1 15 L 5.5 10.5 L 10 19.5 L 12 18.5 L 7.5 9.5 L 13.5 9.5 Z"
+            fill="white" stroke="black" stroke-width="1.5"
+            stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <nav>
+    <div class="win98-titlebar">
+      <div class="win98-title">
+        <svg class="win98-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="14" height="11" fill="#fff" stroke="#000" stroke-width="1"/>
+          <rect x="2" y="2" width="12" height="3" fill="#5a5a5a"/>
+          <rect x="4" y="5" width="8" height="6" fill="#c0c0c0"/>
+          <rect x="5" y="12" width="6" height="2" fill="#c0c0c0"/>
+          <rect x="2" y="14" width="12" height="1" fill="#404040"/>
+        </svg>
+        <span>Aayush Mondkar - CV</span>
+      </div>
+      <div class="win98-controls">
+        <button class="win98-btn" aria-label="Minimize" tabindex="-1">_</button>
+        <button class="win98-btn" aria-label="Maximize" tabindex="-1">□</button>
+        <button class="win98-btn" aria-label="Close" tabindex="-1">✕</button>
+      </div>
+    </div>
+    <div class="menubar">
+      <div class="nav-links"><a href="portfolio.html">← Back</a></div>
+    </div>
+  </nav>
+
+  <div class="cv-stage">
+    <div id="cv-border">
+      <img id="cv-img" src="Aayush Mondkar_Resume.jpg" alt="Aayush Mondkar CV" />
+    </div>
+  </div>
+
+  <div id="ascii-man" aria-hidden="true"><pre id="ascii-frames"></pre></div>
+  <div id="ascii-bubble" aria-hidden="true"><pre id="bubble-text"></pre></div>
+
+  <script src="blah-frames.js"></script>
+  <script>
+    // ── Cursor ──────────────────────────────────────────────────────────
+    (function () {
+      const el = document.getElementById('cursor-el');
+      let vis = false;
+      document.addEventListener('mousemove', e => {
+        if (!vis) { el.style.opacity = '1'; vis = true; }
+        el.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+      });
+      document.addEventListener('mouseleave', () => { el.style.opacity = '0'; vis = false; });
+    })();
+
+    // ── Blah ────────────────────────────────────────────────────────────
+    // Frames live in blah-frames.js (window.BLAH_FRAMES), generated offline:
+    // - run cycle rotoscoped from blah/ref.gif (12 frames, right = mirrored)
+    // - stand / jumping jacks / sleep / tired synthesized in the same style
+    (function () {
+      const D = window.BLAH_FRAMES;
+      if (!D) return;
+
+      const TICK = 30;               // ms per tick
+      const W = D.cols, H = D.rows;  // 50 x 30 character grid
+      const CELL_W = 5.7, CELL_H = 10;  // 10px monospace cell
+      const CHAR_W = Math.round(W * CELL_W);   // ~285px
+      const CHAR_H = H * CELL_H;               // 300px
+
+      // ── Mirroring (source run cycle faces right) ────────────────────
+      const SWAP = { '/':'\\', '\\':'/', '(':')', ')':'(', '[':']', ']':'[', '{':'}', '}':'{', '<':'>', '>':'<' };
+      function mirror(f) {
+        return f.split('\n').map(row => {
+          const p = row.padEnd(W, ' ');
+          let out = '';
+          for (let i = W - 1; i >= 0; i--) { const ch = p[i]; out += SWAP[ch] || ch; }
+          return out.replace(/\s+$/, '');
+        }).join('\n');
+      }
+
+      const F = {
+        runR:   D.run,
+        runL:   D.run.map(mirror),
+        stand:  D.stand,               // 2-frame breathing
+        jacks:  D.jacks,               // 4-frame jumping jacks
+        sleep:  D.sleep,               // 2-frame lying / chest rise
+        tiredR: D.tired,               // bent over, panting (faces right)
+        tiredL: D.tired.map(mirror),
+      };
+
+      // Per-state animation frame duration (ms)
+      const STATE_FTICK = {
+        GREETING: 700,
+        ROAM:     120,   // 12f jog -> 1.44s per cycle
+        IDLE:     700,
+        SLEEP:    900,
+        WORKOUT:  240,   // 4f jacks -> ~1s per rep
+        CHASE:     60,   // 12f sprint -> 0.72s per cycle (matches ref gif)
+        TIRED_OUT:500,
+        HIDE:     120,
+        PEEK:     700,
+      };
+
+      const BUBBLE =
+        '.----------------------.\n' +
+        '| hello, this is my cv |\n' +
+        "'----------------------'\n" +
+        '                      \\';
+      const ZZZ = ['z', 'z Z', 'z Z z'];
+
+      const manEl    = document.getElementById('ascii-man');
+      const framesEl = document.getElementById('ascii-frames');
+      const bubbleEl = document.getElementById('ascii-bubble');
+      const bubbleTx = document.getElementById('bubble-text');
+      const img      = document.getElementById('cv-img');
+      const box      = document.getElementById('cv-border');
+
+      let mx = -999, my = -999;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+      let px, py, facing = 1;
+      let targetX = -1, targetY = -1;
+      let state = '', stTicks = 0, fTicks = 0, fIdx = 0, peekSide = 1;
+
+      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+      const ms = t => t * TICK;
+
+      function imgRect() { return box.getBoundingClientRect(); }
+
+      function showBubble(txt) { bubbleTx.textContent = txt; bubbleEl.style.display = 'block'; }
+      function hideBubble()    { bubbleEl.style.display = 'none'; }
+      function setFrame(frames) { framesEl.textContent = frames[fIdx % frames.length]; }
+      function setState(s) { state = s; stTicks = 0; fIdx = 0; fTicks = 0; hideBubble(); }
+
+      function bounds() {
+        const vw = window.innerWidth, vh = window.innerHeight;
+        const nav = document.querySelector('nav');
+        const CEIL = (nav ? nav.offsetHeight : 70) + 4;
+        const FLOOR = Math.max(CEIL, vh - CHAR_H - 4);
+        return { vw, vh, CEIL, FLOOR };
+      }
+
+      // Pick a destination that avoids the CV image rect
+      function pickTarget() {
+        const { vw, CEIL, FLOOR } = bounds();
+        const ir = imgRect();
+        let tx, ty, tries = 0;
+        do {
+          if (Math.random() < 0.35) {
+            const side = Math.floor(Math.random() * 4);
+            if      (side === 0) { tx = 10 + Math.random() * 100; ty = CEIL + Math.random() * (FLOOR - CEIL); }
+            else if (side === 1) { tx = vw - CHAR_W - 10 - Math.random() * 100; ty = CEIL + Math.random() * (FLOOR - CEIL); }
+            else if (side === 2) { tx = 50 + Math.random() * Math.max(50, vw - CHAR_W - 100); ty = CEIL + Math.random() * 80; }
+            else                 { tx = 50 + Math.random() * Math.max(50, vw - CHAR_W - 100); ty = FLOOR - Math.random() * 80; }
+          } else {
+            tx = 40 + Math.random() * Math.max(50, vw - CHAR_W - 80);
+            ty = CEIL + Math.random() * (FLOOR - CEIL);
+          }
+          tries++;
+          const inCV = tx + CHAR_W > ir.left - 30 && tx < ir.right + 30 &&
+                       ty + CHAR_H > ir.top  - 30 && ty < ir.bottom + 30;
+          if (!inCV || tries > 20) break;
+        } while (true);
+        targetX = tx; targetY = ty;
+      }
+
+      // Move toward (tx, ty); returns remaining distance
+      function moveToward(tx, ty, spd) {
+        const dx = tx - px, dy = ty - py;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 1) {
+          px += (dx / dist) * Math.min(spd, dist);
+          py += (dy / dist) * Math.min(spd, dist);
+          facing = dx > 0 ? 1 : -1;
+        }
+        return dist;
+      }
+
+      function init() {
+        const { vw, vh } = bounds();
+        px = vw - CHAR_W - 20;
+        py = vh * 0.35;
+        facing = -1;
+        setState('GREETING');
+      }
+
+      function tick() {
+        stTicks++;
+        fTicks++;
+        const frameDur = STATE_FTICK[state] || 220;
+        if (fTicks * TICK >= frameDur) { fIdx++; fTicks = 0; }
+
+        const { vw, CEIL, FLOOR } = bounds();
+        const ir = imgRect();
+        const dCx = mx - (px + CHAR_W / 2);
+        const dCy = my - (py + CHAR_H / 2);
+        const distC = Math.sqrt(dCx * dCx + dCy * dCy);
+        const cursorNear = mx > 0 && distC < 170;
+
+        // ── GREETING ──────────────────────────────────────────────────
+        if (state === 'GREETING') {
+          setFrame(F.stand);
+          showBubble(BUBBLE);
+          bubbleEl.style.left = (px - 130) + 'px';
+          bubbleEl.style.top  = (py - 20) + 'px';
+          if (ms(stTicks) >= 5000) { pickTarget(); setState('ROAM'); }
+        }
+
+        // ── ROAM - jogs to a target ───────────────────────────────────
+        else if (state === 'ROAM') {
+          const dist = moveToward(targetX, targetY, 1.5);
+          py = clamp(py, CEIL, FLOOR);
+          setFrame(facing > 0 ? F.runR : F.runL);
+          if (dist <= 6) setState('IDLE');
+          if (ms(stTicks) > 900 && cursorNear) setState('CHASE');
+        }
+
+        // ── IDLE - stands, breathing ──────────────────────────────────
+        else if (state === 'IDLE') {
+          setFrame(F.stand);
+          if (ms(stTicks) > 2600) {
+            const r = Math.random();
+            if      (r < 0.22) setState('SLEEP');
+            else if (r < 0.44) setState('WORKOUT');
+            else if (r < 0.56) setState('HIDE');
+            else { pickTarget(); setState('ROAM'); }
+          }
+          if (ms(stTicks) > 600 && cursorNear) setState('CHASE');
+        }
+
+        // ── SLEEP - lies down, Zzz ────────────────────────────────────
+        else if (state === 'SLEEP') {
+          setFrame(F.sleep);
+          showBubble(ZZZ[fIdx % ZZZ.length]);
+          bubbleEl.style.left = (px + CHAR_W * 0.10) + 'px';
+          bubbleEl.style.top  = (py + CHAR_H * 0.52) + 'px';
+          if (ms(stTicks) > 8000) { pickTarget(); setState('ROAM'); }
+        }
+
+        // ── WORKOUT - jumping jacks ───────────────────────────────────
+        else if (state === 'WORKOUT') {
+          setFrame(F.jacks);
+          if (ms(stTicks) > 6200) { pickTarget(); setState('ROAM'); }
+        }
+
+        // ── HIDE - jogs behind the CV, waits, then peeks ──────────────
+        else if (state === 'HIDE') {
+          const hx = ir.left + ir.width  * 0.5 - CHAR_W / 2;
+          const hy = ir.top  + ir.height * 0.5 - CHAR_H / 2;
+          const dist = moveToward(hx, hy, 1.5);
+          if (dist > 5) {
+            setFrame(facing > 0 ? F.runR : F.runL);
+          } else {
+            setFrame(F.stand);
+            if (ms(stTicks) > 6000) { peekSide = Math.random() < 0.5 ? -1 : 1; setState('PEEK'); }
+          }
+        }
+
+        // ── PEEK - appears at the side of the CV ──────────────────────
+        else if (state === 'PEEK') {
+          px = peekSide < 0 ? ir.left - CHAR_W + 30 : ir.right - 30;
+          py = clamp(ir.top + ir.height * 0.25, CEIL, FLOOR);
+          setFrame(F.stand);
+          if (ms(stTicks) > 2600) { pickTarget(); setState('ROAM'); facing = peekSide; }
+        }
+
+        // ── CHASE - sprints after the cursor ──────────────────────────
+        else if (state === 'CHASE') {
+          const dist = moveToward(mx - CHAR_W / 2, my - CHAR_H / 2, 5.5);
+          px = clamp(px, 4, Math.max(4, vw - CHAR_W - 4));
+          py = clamp(py, CEIL, FLOOR);
+          if (dist > 30) setFrame(facing > 0 ? F.runR : F.runL);
+          else setFrame(F.stand);   // caught it - stands over the cursor
+          if (ms(stTicks) > 6000) setState('TIRED_OUT');
+        }
+
+        // ── TIRED_OUT - bent over, catching breath ────────────────────
+        else if (state === 'TIRED_OUT') {
+          setFrame(facing > 0 ? F.tiredR : F.tiredL);
+          if (ms(stTicks) > 2600) {
+            if (Math.random() < 0.45) setState('SLEEP');
+            else { pickTarget(); setState('ROAM'); }
+          }
+        }
+
+        manEl.style.left = Math.round(px) + 'px';
+        manEl.style.top  = Math.round(py) + 'px';
+
+        // Always go behind the CV when overlapping - never on top of it
+        const overCV = px + CHAR_W * 0.7 > ir.left && px + CHAR_W * 0.3 < ir.right &&
+                       py + CHAR_H * 0.85 > ir.top && py + CHAR_H * 0.15 < ir.bottom;
+        manEl.style.zIndex = overCV ? '3' : '10';
+      }
+
+      function start() { init(); setInterval(tick, TICK); }
+      if (img.complete) start(); else img.addEventListener('load', start);
+    })();
+  </script>
+
+</body>
+</html>

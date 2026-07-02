@@ -1,11 +1,22 @@
-# Source files (originals kept locally, published JPGs are what's deployed)
+﻿# Source files (originals kept locally, published JPGs are what's deployed)
 *.pdf
 [0-9].png
 [0-9][0-9].png
 ASSEMBLY*.png
-CONCEPT.jpg
 FIRST FLOOR PLAN.png
+FORM DEVELOPMENT.png
 hero.png
+1_* - Photo*.jpg
+blah.jpg
+form-development.jpg
+
+# Source asset folders (originals for subpages; converted JPGs live in root)
+/p4/
+/p5/
+/blah/
+
+# Tooling
+/.impeccable/
 
 # Nested working dir
 /website/

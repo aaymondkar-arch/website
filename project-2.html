@@ -3,20 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Project Two — Aayush Mondkar</title>
-  <meta name="description" content="Project Two — case study by Aayush Mondkar." />
+  <title>Adaptive Reuse of Paper Mill Buildings — Aayush Mondkar</title>
+  <meta name="description" content="Adaptive Reuse of Paper Mill Buildings — ARCH 700 design studio, by Aayush Mondkar." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Coral+Pixels&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #fafaf8;
+      --bg: #ffffff;
       --ink: #121212;
       --muted: #6b6b68;
       --line: #e6e4df;
       --card: #ffffff;
       --radius: 4px;
-      --max: 1120px;
+      --max: none;
     }
     * { box-sizing: border-box; }
     html, body {
@@ -36,37 +35,92 @@
     .wrap {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 56px;
     }
 
-    /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      background: rgba(250, 250, 248, 0.92);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--line);
-      z-index: 50;
+    /* CURSOR */
+    *, *:hover, *:focus { cursor: none !important; }
+    #cursor-el {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      user-select: none;
+      opacity: 0;
+      will-change: transform;
     }
-    nav .wrap {
+
+    /* NAV (Win98) */
+    body { padding-top: 72px; }
+    html { scroll-padding-top: 72px; }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #c0c0c0;
+      z-index: 50;
+      border-bottom: 2px solid #404040;
+    }
+    .win98-titlebar {
+      background: linear-gradient(to right, #4a4a4a 0%, #7a7a7a 100%);
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 72px;
+      padding: 4px 4px 4px 8px;
+      user-select: none;
     }
-    .brand {
-      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
-      font-weight: 400;
-      font-size: 20px;
-    }
-    .back {
+    .win98-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
       font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      min-width: 0;
+      flex: 1;
     }
-    .back:hover { color: var(--ink); opacity: 1; }
+    .win98-icon { width: 18px; height: 18px; flex-shrink: 0; display: block; }
+    .win98-controls { display: flex; gap: 2px; margin-left: 6px; flex-shrink: 0; }
+    .win98-btn {
+      width: 22px; height: 22px;
+      background: #c0c0c0;
+      border: 1px solid #000000;
+      box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080;
+      font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
+      font-size: 11px; font-weight: bold; line-height: 1;
+      color: #000000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 0 1px;
+    }
+    .win98-btn:active { box-shadow: inset -1px -1px 0 #ffffff, inset 1px 1px 0 #808080; }
+    .menubar {
+      padding: 2px 6px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border-top: 1px solid #ffffff;
+      border-bottom: 1px solid #808080;
+    }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-family: "MS Sans Serif", "Tahoma", Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #000000;
+      padding: 4px 12px;
+      letter-spacing: 0;
+      display: block;
+    }
+    .nav-links a:hover { background: #5a5a5a; color: #ffffff; opacity: 1; }
+    @media (max-width: 600px) {
+      .win98-title { font-size: 12px; }
+      .menubar { padding: 2px 4px; }
+    }
 
     /* PROJECT HEADER */
     header.project-hero {
@@ -92,10 +146,10 @@
       border-radius: 50%;
     }
     .project-hero h1 {
-      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(44px, 6vw, 76px);
       line-height: 1.1;
-      font-weight: 400;
+      font-weight: 700;
       margin: 0 0 28px;
       max-width: 900px;
     }
@@ -108,19 +162,16 @@
     /* HERO IMAGE */
     .hero-image {
       width: 100%;
-      aspect-ratio: 16 / 9;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       margin: 60px 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      background: #f0ece4;
     }
-    .hero-image .placeholder {
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* CONTENT */
@@ -150,10 +201,10 @@
     }
 
     h2 {
-      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(28px, 3.2vw, 44px);
       line-height: 1.15;
-      font-weight: 400;
+      font-weight: 700;
       margin: 0 0 32px;
       max-width: 800px;
     }
@@ -204,6 +255,7 @@
       aspect-ratio: 4 / 3;
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -212,15 +264,46 @@
       grid-column: 1 / -1;
       aspect-ratio: 16 / 7;
     }
-    .gallery .tile .placeholder {
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .gallery .tile.has-image {
+      aspect-ratio: auto;
+      background: #fff;
+      padding: 6% 8%;
+    }
+    .gallery .tile img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
     @media (max-width: 800px) {
       .gallery { grid-template-columns: 1fr; }
       .gallery .tile.wide { aspect-ratio: 4 / 3; }
+    }
+
+    /* SMALLER SUB-GRID — 4 per row */
+    .gallery-sub {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .gallery-sub .stile {
+      aspect-ratio: 3 / 2;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+    }
+    .gallery-sub .stile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    @media (max-width: 800px) {
+      .gallery-sub { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 460px) {
+      .gallery-sub { grid-template-columns: 1fr; }
     }
 
     /* NEXT PROJECT */
@@ -236,9 +319,9 @@
       margin: 0 0 20px;
     }
     .next-project .title {
-      font-family: "Coral Pixels", "Helvetica Neue World 75 Bold", "Helvetica Neue", sans-serif;
+      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-size: clamp(32px, 4vw, 56px);
-      font-weight: 400;
+      font-weight: 700;
       display: inline-block;
       border-bottom: 1px solid var(--line);
       padding-bottom: 10px;
@@ -260,48 +343,230 @@
       gap: 12px;
     }
 
-    /* patterns */
-    .p1 { background: linear-gradient(135deg, #f0ece4 0%, #d9d3c6 100%); }
-    .p2 { background: linear-gradient(135deg, #e7e9ec 0%, #c4c9d1 100%); }
-    .p3 { background: linear-gradient(135deg, #ece4e4 0%, #d1bfbf 100%); }
-    .p4 { background: linear-gradient(135deg, #e4ecea 0%, #b8c9c5 100%); }
-    .p5 { background: linear-gradient(135deg, #efece2 0%, #ccc49f 100%); }
-    .p6 { background: linear-gradient(135deg, #e6e0ec 0%, #bfb3cf 100%); }
+    /* gallery cursor */
+    .gallery .tile img,
+    .gallery-sub .stile img { cursor: zoom-in; }
+
+    /* ---------- LIGHTBOX ---------- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: #0b0b0b;
+      z-index: 1000;
+      display: none;
+      overflow: hidden;
+    }
+    .lightbox.open { display: block; }
+    body.lb-open { overflow: hidden; }
+
+    .lightbox .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+    .lightbox .stage.grabbing { cursor: grabbing; }
+    .lightbox img.zoomed {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      transform-origin: 50% 50%;
+      will-change: transform;
+      transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+    .lightbox .stage.dragging img.zoomed { transition: none; }
+
+    .lightbox .lb-top {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .lightbox .lb-back,
+    .lightbox .lb-controls,
+    .lightbox .lb-counter { pointer-events: auto; }
+
+    .lightbox .lb-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      color: #000;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+      transition: background 0.15s ease;
+    }
+    .lightbox .lb-back:hover { background: #f4f4f4; }
+
+    .lightbox .lb-counter {
+      color: #000;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+      font-weight: 700;
+    }
+
+    .lightbox .lb-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.35);
+    }
+    .lightbox .lb-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: #000;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      transition: background 0.15s ease;
+    }
+    .lightbox .lb-btn:hover { background: rgba(0,0,0,0.06); }
+    .lightbox .lb-btn:disabled { opacity: 0.35; cursor: default; }
+    .lightbox .lb-level {
+      font-size: 12px;
+      color: #000;
+      min-width: 48px;
+      text-align: center;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+    }
+
+    .lightbox .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #ffffff;
+      color: #000;
+      font-size: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.35);
+      transition: background 0.15s ease;
+      font-family: inherit;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .lightbox .lb-nav:hover { background: #f4f4f4; }
+    .lightbox .lb-nav:disabled { opacity: 0.25; cursor: default; }
+    .lightbox .lb-prev { left: 24px; }
+    .lightbox .lb-next { right: 24px; }
+
+    @media (max-width: 600px) {
+      .lightbox .lb-top { top: 14px; left: 14px; right: 14px; gap: 8px; }
+      .lightbox .lb-back,
+      .lightbox .lb-counter { padding: 8px 12px; font-size: 11px; }
+      .lightbox .lb-nav { width: 42px; height: 42px; font-size: 18px; }
+      .lightbox .lb-prev { left: 10px; }
+      .lightbox .lb-next { right: 10px; }
+    }
   </style>
 </head>
 <body>
 
+  <div id="cursor-el" aria-hidden="true">
+    <svg width="16" height="23" viewBox="0 0 16 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 1 1 L 1 15 L 5.5 10.5 L 10 19.5 L 12 18.5 L 7.5 9.5 L 13.5 9.5 Z"
+            fill="white" stroke="black" stroke-width="1.5"
+            stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+
   <nav>
-    <div class="wrap">
-      <div class="brand"><a href="index.html">Aayush Mondkar</a></div>
-      <a class="back" href="index.html#work">← Back to work</a>
+    <div class="win98-titlebar">
+      <div class="win98-title">
+        <svg class="win98-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="1" y="1" width="14" height="11" fill="#fff" stroke="#000" stroke-width="1"/>
+          <rect x="2" y="2" width="12" height="3" fill="#5a5a5a"/>
+          <rect x="4" y="5" width="8" height="6" fill="#c0c0c0"/>
+          <rect x="5" y="12" width="6" height="2" fill="#c0c0c0"/>
+          <rect x="2" y="14" width="12" height="1" fill="#404040"/>
+        </svg>
+        <span>Adaptive Reuse of Paper Mill Buildings — Aayush Mondkar</span>
+      </div>
+      <div class="win98-controls">
+        <button class="win98-btn" aria-label="Minimize" tabindex="-1">_</button>
+        <button class="win98-btn" aria-label="Maximize" tabindex="-1">□</button>
+        <button class="win98-btn" aria-label="Close" tabindex="-1">✕</button>
+      </div>
+    </div>
+    <div class="menubar">
+      <div class="nav-links">
+        <a href="portfolio.html">Home</a>
+        <a href="portfolio.html#work">← Work</a>
+      </div>
     </div>
   </nav>
 
   <header class="project-hero">
     <div class="wrap">
       <p class="label">Project 02</p>
-      <h1>Project Two</h1>
-      <div class="tag">Editorial · 2024 · Client name</div>
-      <div class="hero-image p2"><span class="placeholder">Hero image</span></div>
+      <h1>Adaptive Reuse of Paper Mill Buildings</h1>
+      <div class="tag">Architectural Design · 2025 · ARCH 700</div>
+      <div class="hero-image"><img src="hero-2.jpg" alt="Adaptive Reuse of Paper Mill Buildings hero" /></div>
     </div>
   </header>
 
   <section>
     <div class="wrap">
-      <p class="section-label">Overview</p>
       <div class="overview">
         <div>
-          <h2>A short project title or statement.</h2>
+          <h2>Adaptive reuse of decommissioned paper mill buildings.</h2>
         </div>
         <div>
-          <p>A short description of the project goes here. Explain the brief, your role, and what made the work distinct.</p>
-          <p>Use a second paragraph for process notes, collaborators, or the outcome. Keep it considered and concise.</p>
+          <p>A design studio project examining the transformation of decommissioned paper mill buildings into a new architectural program. The project investigates how industrial heritage structures can absorb contemporary use without erasing the material and spatial history embedded in their fabric.</p>
+          <p>The design develops a layered intervention strategy: new insertions are legible as contemporary additions while the existing mill structure is repaired and made inhabitable. The work negotiates between preservation and transformation, using the mill's structural logic as both constraint and generative resource.</p>
           <div class="meta-list" style="margin-top: 32px;">
-            <div class="row"><span class="k">Discipline</span><span class="v">Editorial</span></div>
-            <div class="row"><span class="k">Year</span><span class="v">2024</span></div>
-            <div class="row"><span class="k">Client</span><span class="v">Client name</span></div>
-            <div class="row"><span class="k">Role</span><span class="v">Design · Art direction</span></div>
+            <div class="row"><span class="k">Discipline</span><span class="v">Architectural Design</span></div>
+            <div class="row"><span class="k">Year</span><span class="v">2025</span></div>
+            <div class="row"><span class="k">Course</span><span class="v">ARCH 700</span></div>
+            <div class="row"><span class="k">Role</span><span class="v">Design · Documentation</span></div>
           </div>
         </div>
       </div>
@@ -310,13 +575,32 @@
 
   <section>
     <div class="wrap">
-      <p class="section-label">Selected imagery</p>
+      <p class="section-label">Drawing set</p>
       <div class="gallery">
-        <div class="tile wide p2"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p2"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p3"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p4"><span class="placeholder">Image placeholder</span></div>
-        <div class="tile p5"><span class="placeholder">Image placeholder</span></div>
+        <div class="tile wide has-image"><img src="arch700-page-01.jpg" alt="Adaptive Reuse — drawing set page 1" /></div>
+        <div class="tile has-image"><img src="arch700-page-02.jpg" alt="Adaptive Reuse — drawing set page 2" /></div>
+        <div class="tile has-image"><img src="arch700-page-03.jpg" alt="Adaptive Reuse — drawing set page 3" /></div>
+        <div class="tile has-image"><img src="arch700-page-04.jpg" alt="Adaptive Reuse — drawing set page 4" /></div>
+        <div class="tile has-image"><img src="arch700-page-05.jpg" alt="Adaptive Reuse — drawing set page 5" /></div>
+      </div>
+
+      <div class="gallery-sub">
+        <div class="stile"><img src="arch700-page-06.jpg" alt="Adaptive Reuse — page 6" /></div>
+        <div class="stile"><img src="arch700-page-07.jpg" alt="Adaptive Reuse — page 7" /></div>
+        <div class="stile"><img src="arch700-page-08.jpg" alt="Adaptive Reuse — page 8" /></div>
+        <div class="stile"><img src="arch700-page-09.jpg" alt="Adaptive Reuse — page 9" /></div>
+        <div class="stile"><img src="arch700-page-10.jpg" alt="Adaptive Reuse — page 10" /></div>
+        <div class="stile"><img src="arch700-page-11.jpg" alt="Adaptive Reuse — page 11" /></div>
+        <div class="stile"><img src="arch700-page-12.jpg" alt="Adaptive Reuse — page 12" /></div>
+        <div class="stile"><img src="arch700-page-13.jpg" alt="Adaptive Reuse — page 13" /></div>
+        <div class="stile"><img src="arch700-page-14.jpg" alt="Adaptive Reuse — page 14" /></div>
+        <div class="stile"><img src="arch700-page-15.jpg" alt="Adaptive Reuse — page 15" /></div>
+        <div class="stile"><img src="arch700-page-16.jpg" alt="Adaptive Reuse — page 16" /></div>
+        <div class="stile"><img src="photo-1.jpg" alt="Adaptive Reuse — photo 1" /></div>
+        <div class="stile"><img src="photo-2.jpg" alt="Adaptive Reuse — photo 2" /></div>
+        <div class="stile"><img src="photo-3.jpg" alt="Adaptive Reuse — photo 3" /></div>
+        <div class="stile"><img src="photo-4.jpg" alt="Adaptive Reuse — photo 4" /></div>
+        <div class="stile"><img src="photo-5.jpg" alt="Adaptive Reuse — photo 5" /></div>
       </div>
     </div>
   </section>
@@ -324,19 +608,198 @@
   <div class="next-project">
     <div class="wrap">
       <p class="nav-small">Next project</p>
-      <a class="title" href="project-3.html">Project Three →</a>
+      <a class="title" href="project-3.html">Building Performance →</a>
     </div>
   </div>
 
   <footer>
     <div class="wrap">
       <div>© <span id="year"></span> Aayush Mondkar. All rights reserved.</div>
-      <div><a href="index.html">Home</a></div>
+      <div><a href="portfolio.html">Home</a></div>
     </div>
   </footer>
 
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lb-top">
+      <button class="lb-back" id="lb-back" type="button" aria-label="Close viewer">
+        <span aria-hidden="true">←</span><span>Back</span>
+      </button>
+      <div class="lb-counter" id="lb-counter">1 / 1</div>
+      <div class="lb-controls" role="group" aria-label="Zoom controls">
+        <button class="lb-btn" id="lb-zoom-out" type="button" aria-label="Zoom out">−</button>
+        <span class="lb-level" id="lb-level">100%</span>
+        <button class="lb-btn" id="lb-zoom-in" type="button" aria-label="Zoom in">+</button>
+        <button class="lb-btn" id="lb-reset" type="button" aria-label="Reset zoom" title="Reset">↺</button>
+      </div>
+    </div>
+    <button class="lb-nav lb-prev" id="lb-prev" type="button" aria-label="Previous image">‹</button>
+    <button class="lb-nav lb-next" id="lb-next" type="button" aria-label="Next image">›</button>
+    <div class="stage" id="lb-stage">
+      <img id="lb-img" class="zoomed" src="" alt="" />
+    </div>
+  </div>
+
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Windows NT cursor
+    (function () {
+      const cursorEl = document.getElementById('cursor-el');
+      if (!cursorEl) return;
+      let cursorVisible = false;
+      document.addEventListener('mousemove', (e) => {
+        if (!cursorVisible) { cursorEl.style.opacity = '1'; cursorVisible = true; }
+        cursorEl.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }, { passive: true });
+    })();
+
+    // ---------- Gallery lightbox with prev/next + zoom ----------
+    (function () {
+      const triggers = Array.from(document.querySelectorAll(".gallery img, .gallery-sub img"));
+      if (!triggers.length) return;
+
+      const lb = document.getElementById("lightbox");
+      const stage = document.getElementById("lb-stage");
+      const img = document.getElementById("lb-img");
+      const back = document.getElementById("lb-back");
+      const counter = document.getElementById("lb-counter");
+      const zoomIn = document.getElementById("lb-zoom-in");
+      const zoomOut = document.getElementById("lb-zoom-out");
+      const reset = document.getElementById("lb-reset");
+      const level = document.getElementById("lb-level");
+      const prev = document.getElementById("lb-prev");
+      const next = document.getElementById("lb-next");
+
+      const MIN = 1, MAX = 5, STEP = 0.25;
+      let idx = 0;
+      let scale = 1, tx = 0, ty = 0;
+      let dragging = false, lastX = 0, lastY = 0;
+      let lastFocused = null;
+
+      function updateTransform() {
+        img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+        level.textContent = Math.round(scale * 100) + "%";
+        zoomOut.disabled = scale <= MIN + 0.001;
+        zoomIn.disabled = scale >= MAX - 0.001;
+        stage.style.cursor = scale > 1 ? (dragging ? "grabbing" : "grab") : "default";
+      }
+
+      function clampTranslate() {
+        const rect = stage.getBoundingClientRect();
+        const iw = img.clientWidth * scale;
+        const ih = img.clientHeight * scale;
+        const maxX = Math.max(0, (iw - rect.width) / 2);
+        const maxY = Math.max(0, (ih - rect.height) / 2);
+        tx = Math.max(-maxX, Math.min(maxX, tx));
+        ty = Math.max(-maxY, Math.min(maxY, ty));
+      }
+
+      function zoomAt(clientX, clientY, delta) {
+        const prevScale = scale;
+        const nextScale = Math.max(MIN, Math.min(MAX, scale + delta));
+        if (nextScale === prevScale) return;
+        const rect = stage.getBoundingClientRect();
+        const cx = clientX - rect.left - rect.width / 2;
+        const cy = clientY - rect.top - rect.height / 2;
+        const ix = (cx - tx) / prevScale;
+        const iy = (cy - ty) / prevScale;
+        scale = nextScale;
+        tx = cx - ix * scale;
+        ty = cy - iy * scale;
+        if (scale <= 1) { scale = 1; tx = 0; ty = 0; }
+        clampTranslate();
+        updateTransform();
+      }
+      function zoomCenter(delta) {
+        const rect = stage.getBoundingClientRect();
+        zoomAt(rect.left + rect.width / 2, rect.top + rect.height / 2, delta);
+      }
+      function resetView() { scale = 1; tx = 0; ty = 0; updateTransform(); }
+
+      function show(i) {
+        idx = (i + triggers.length) % triggers.length;
+        const src = triggers[idx];
+        img.src = src.src;
+        img.alt = src.alt || "";
+        counter.textContent = `${idx + 1} / ${triggers.length}`;
+        resetView();
+      }
+
+      function open(i, triggerEl) {
+        lastFocused = triggerEl || null;
+        lb.classList.add("open");
+        lb.setAttribute("aria-hidden", "false");
+        document.body.classList.add("lb-open");
+        show(i);
+        back.focus();
+      }
+      function close() {
+        lb.classList.remove("open");
+        lb.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("lb-open");
+        resetView();
+        if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+      }
+
+      triggers.forEach((el, i) => {
+        el.addEventListener("click", (e) => { e.preventDefault(); open(i, el); });
+      });
+
+      back.addEventListener("click", close);
+      prev.addEventListener("click", () => show(idx - 1));
+      next.addEventListener("click", () => show(idx + 1));
+      zoomIn.addEventListener("click", () => zoomCenter(STEP));
+      zoomOut.addEventListener("click", () => zoomCenter(-STEP));
+      reset.addEventListener("click", resetView);
+
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowLeft") show(idx - 1);
+        else if (e.key === "ArrowRight") show(idx + 1);
+        else if (e.key === "+" || e.key === "=") { e.preventDefault(); zoomCenter(STEP); }
+        else if (e.key === "-" || e.key === "_") { e.preventDefault(); zoomCenter(-STEP); }
+        else if (e.key === "0") resetView();
+      });
+
+      stage.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? STEP : -STEP;
+        zoomAt(e.clientX, e.clientY, delta);
+      }, { passive: false });
+
+      stage.addEventListener("dblclick", (e) => {
+        if (scale > 1) resetView();
+        else zoomAt(e.clientX, e.clientY, 1.5);
+      });
+
+      stage.addEventListener("pointerdown", (e) => {
+        if (scale <= 1) return;
+        dragging = true;
+        lastX = e.clientX; lastY = e.clientY;
+        stage.classList.add("dragging");
+        stage.setPointerCapture(e.pointerId);
+        updateTransform();
+      });
+      stage.addEventListener("pointermove", (e) => {
+        if (!dragging) return;
+        tx += e.clientX - lastX;
+        ty += e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        clampTranslate();
+        img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+      });
+      function endDrag(e) {
+        if (!dragging) return;
+        dragging = false;
+        stage.classList.remove("dragging");
+        try { stage.releasePointerCapture(e.pointerId); } catch (_) {}
+        updateTransform();
+      }
+      stage.addEventListener("pointerup", endDrag);
+      stage.addEventListener("pointercancel", endDrag);
+      stage.addEventListener("pointerleave", endDrag);
+    })();
   </script>
 
 </body>
