@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aayush Mondkar — Portfolio</title>
+  <title>Aayush Mondkar - Portfolio</title>
   <meta name="description" content="Selected works by Aayush Mondkar." />
+  <meta property="og:title" content="Aayush Mondkar - Portfolio" />
+  <meta property="og:description" content="Trained as an architect, wired as an artist. Selected works across architecture, identity, print, and digital." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://aaymondkar-arch.github.io/website/hero-poster.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Detect landing-page entry before first paint so the loading screen blocks any flash -->
@@ -24,8 +28,9 @@
     *, *:hover, *:focus { cursor: none !important; }
     * { box-sizing: border-box; }
 
+    /* Section motion is owned by the snap-scroll JS; CSS mandatory snap
+       would fight scrollbar drags, so it stays off. */
     html {
-      scroll-snap-type: y mandatory;
       scroll-padding-top: 72px;
       scroll-behavior: smooth;
     }
@@ -51,6 +56,17 @@
     .wrap {
       width: 100%;
       padding: 0 56px;
+    }
+
+    /* visually hidden, present for document outline and screen readers */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
     }
 
     /* ---------- LOADING SCREEN ---------- */
@@ -182,7 +198,6 @@
       height: calc(100vh - 72px);
       display: flex;
       align-items: center;
-      scroll-snap-align: start;
     }
     header.hero .wrap { width: 100%; }
     .hero-row {
@@ -262,7 +277,6 @@
       display: flex;
       flex-direction: column;
       padding: 48px 0;
-      scroll-snap-align: start;
       overflow: hidden;
     }
     section#contact .wrap {
@@ -454,7 +468,8 @@
       z-index: 1;
       opacity: 0;           /* hidden until JS sets initial position on load */
     }
-    .sc-wrap.sc-live:hover { z-index: 10; }
+    .sc-wrap.sc-live:hover,
+    .sc-wrap.sc-live:focus-within { z-index: 10; }
 
     .sc-link { display: block; text-decoration: none; color: inherit; }
     .sc-link:hover { opacity: 1; }
@@ -471,7 +486,8 @@
       transform: scale(1);
       position: relative;
     }
-    .sc-wrap.sc-live:hover .sc-card {
+    .sc-wrap.sc-live:hover .sc-card,
+    .sc-wrap.sc-live:focus-within .sc-card {
       transform: scale(1.04);
     }
 
@@ -494,7 +510,8 @@
       transition: opacity var(--sc-hover-dur) ease;
       pointer-events: none;
     }
-    .sc-wrap.sc-live:hover .sc-overlay { opacity: 1; }
+    .sc-wrap.sc-live:hover .sc-overlay,
+    .sc-wrap.sc-live:focus-within .sc-overlay { opacity: 1; }
     .sc-overlay-title {
       font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
       font-weight: 700;
@@ -546,7 +563,6 @@
        everything else (palette, nav, eyes, scatter) stays itself.
        ================================================================ */
     @media (max-width: 1024px) {
-      html { scroll-snap-type: none; }
       .wrap { padding: 0 32px; }
 
       header.hero {
@@ -623,7 +639,7 @@
           <rect x="5" y="12" width="6" height="2" fill="#c0c0c0"/>
           <rect x="2" y="14" width="12" height="1" fill="#404040"/>
         </svg>
-        <span>Aayush Mondkar — Portfolio</span>
+        <span>Aayush Mondkar - Portfolio</span>
       </div>
       <div class="win98-controls">
         <button class="win98-btn" aria-label="Minimize" tabindex="-1">_</button>
@@ -642,6 +658,7 @@
 
   <header class="hero" id="about">
     <div class="wrap">
+      <h1 class="sr-only">Aayush Mondkar, architect and visual designer</h1>
       <div class="hero-row">
         <div class="hero-text">
           <p>Trained as an architect, wired as an artist. I move between structure and sensation, drawing from the full spectrum of human creativity: the tension in a film frame, the weight of a typeface, the silence between notes, the story a photograph refuses to explain.</p>
@@ -654,7 +671,7 @@
           </div>
         </div>
         <div class="hero-video">
-          <video src="website lol.mp4" autoplay muted loop playsinline></video>
+          <video src="hero.mp4" poster="hero-poster.jpg" autoplay muted loop playsinline></video>
         </div>
       </div>
     </div>
@@ -790,6 +807,7 @@
       // Single scroll gesture = one section at a time
       document.addEventListener('wheel', (e) => {
         if (narrow()) return;
+        if (e.ctrlKey) return;   // browser zoom gesture — never intercept
         e.preventDefault();
         if (e.deltaY > 10) goTo(current + 1);
         else if (e.deltaY < -10) goTo(current - 1);
@@ -1000,6 +1018,9 @@
         pendingFrame = false;
         if (!lastE) return;
         const tl = targetOffset(eyeL, lastE), tr = targetOffset(eyeR, lastE);
+        // Settled: skip the expensive re-render until the target moves again
+        if (Math.abs(tl.px - state.l.px) < 0.02 && Math.abs(tl.py - state.l.py) < 0.02 &&
+            Math.abs(tr.px - state.r.px) < 0.02 && Math.abs(tr.py - state.r.py) < 0.02) return;
         state.l.px += (tl.px - state.l.px) * 0.32; state.l.py += (tl.py - state.l.py) * 0.32;
         state.r.px += (tr.px - state.r.px) * 0.32; state.r.py += (tr.py - state.r.py) * 0.32;
         eyeL.textContent = renderEye(state.l.px, state.l.py, -1);
@@ -1013,6 +1034,8 @@
 
       eyeL.textContent = renderEye(0, 0, -1);
       eyeR.textContent = renderEye(0, 0, +1);
+      // Reduced motion: hold forward gaze, no tracking loop
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       window.addEventListener("mousemove", onMove, { passive: true });
       function idleTick() { if (lastE) tick(); requestAnimationFrame(idleTick); }
       requestAnimationFrame(idleTick);
