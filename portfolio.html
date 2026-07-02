@@ -203,6 +203,9 @@
     .hero-text p:last-of-type { margin-bottom: 0; }
     .hero-video {
       width: 100%;
+      /* squat windows: keep the square video inside the viewport */
+      width: min(100%, calc(100svh - 260px));
+      justify-self: end;
       aspect-ratio: 1 / 1;
       border-radius: var(--radius);
       overflow: hidden;
@@ -212,10 +215,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-    }
-    @media (max-width: 900px) {
-      .hero-row { grid-template-columns: 1fr; gap: 40px; }
-      .hero-video { width: 100%; max-width: 420px; }
     }
 
     .eyes {
@@ -234,9 +233,6 @@
       white-space: pre;
       pointer-events: none;
       user-select: none;
-    }
-    @media (max-width: 900px) {
-      .eyes pre { font-size: 5px; }
     }
 
     /* ---------- ABOUT META ---------- */
@@ -439,7 +435,7 @@
       --sc-ease: cubic-bezier(0.22, 1, 0.36, 1);     /* expo-out feel             */
       --sc-hover-dur:  200ms;                         /* overlay / scale fade time */
       --sc-card-w:     min(460px, calc(33vw - 40px));  /* card width — 3 cols max   */
-      --sc-card-w-mob: 240px;                         /* card width on mobile      */
+      --sc-card-w-mob: min(240px, calc(50vw - 40px));  /* card width on mobile      */
       position: relative;                             /* contain absolute stage    */
     }
 
@@ -535,6 +531,57 @@
         transition: none !important;
         width: auto !important;
       }
+    }
+    @media (prefers-reduced-motion: reduce) and (max-width: 800px) {
+      #work { height: auto !important; }
+      #scatter-stage { grid-template-columns: 1fr 1fr !important; padding: 0 20px 48px !important; }
+    }
+    @media (prefers-reduced-motion: reduce) and (max-width: 500px) {
+      #scatter-stage { grid-template-columns: 1fr !important; }
+    }
+
+    /* ================================================================
+       NARROW MODE — split-screen windows, tablets, phones (≤1024px).
+       Snap-scroll and fixed section heights hand over to natural flow;
+       everything else (palette, nav, eyes, scatter) stays itself.
+       ================================================================ */
+    @media (max-width: 1024px) {
+      html { scroll-snap-type: none; }
+      .wrap { padding: 0 32px; }
+
+      header.hero {
+        height: auto;
+        min-height: calc(100vh - 72px);
+        min-height: calc(100svh - 72px);
+        padding: 48px 0;
+      }
+      .hero-row { grid-template-columns: 1fr; gap: 40px; }
+      .hero-text p { font-size: 18px; line-height: 1.5; }
+      .hero-video { width: 100%; max-width: 420px; justify-self: start; }
+
+      section#work {
+        height: calc(100vh - 72px);
+        height: calc(100svh - 72px);
+      }
+
+      section#contact {
+        height: auto;
+        min-height: calc(100vh - 72px);
+        min-height: calc(100svh - 72px);
+        padding: 48px 0;
+        overflow: visible;
+      }
+      .contact { grid-template-columns: 1fr; gap: 48px; }
+      #contact-title { font-size: clamp(44px, 10vw, 96px); }
+      .eyes { gap: 12px; }
+      .eyes pre { font-size: min(6px, calc((100vw - 76px) / 132)); }
+    }
+    @media (max-width: 600px) {
+      .wrap { padding: 0 20px; }
+      header.hero { padding: 40px 0; }
+      .hero-text p { font-size: 16px; }
+      #contact-title { font-size: clamp(36px, 12vw, 64px); }
+      .eyes pre { font-size: min(6px, calc((100vw - 52px) / 132)); }
     }
   </style>
 </head>
@@ -691,7 +738,7 @@
       const paras = heroText.querySelectorAll('p');
 
       function fit() {
-        if (window.innerWidth <= 900) {
+        if (window.innerWidth <= 1024) {
           paras.forEach(p => p.style.fontSize = '');
           return;
         }
@@ -721,6 +768,8 @@
       const NAV_H = 72;
       let current = 0;
       let locked = false;
+      // Narrow windows (split-screen, tablet, phone) scroll naturally
+      const narrow = () => window.innerWidth <= 1024;
 
       function targetScrollTop(idx) {
         return Math.max(0, sections[idx].offsetTop - NAV_H);
@@ -740,6 +789,7 @@
 
       // Single scroll gesture = one section at a time
       document.addEventListener('wheel', (e) => {
+        if (narrow()) return;
         e.preventDefault();
         if (e.deltaY > 10) goTo(current + 1);
         else if (e.deltaY < -10) goTo(current - 1);
@@ -747,6 +797,7 @@
 
       // Keyboard
       document.addEventListener('keydown', (e) => {
+        if (narrow()) return;
         if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); goTo(current - 1); }
       });
@@ -755,6 +806,7 @@
       let touchY = 0;
       document.addEventListener('touchstart', (e) => { touchY = e.touches[0].clientY; }, { passive: true });
       document.addEventListener('touchend', (e) => {
+        if (narrow()) return;
         const dy = touchY - e.changedTouches[0].clientY;
         if (dy >  55) goTo(current + 1);
         if (dy < -55) goTo(current - 1);
@@ -972,6 +1024,7 @@
       if (!el) return;
 
       function fit() {
+        if (window.innerWidth <= 1024) { el.style.fontSize = ''; return; }
         const section = document.getElementById('contact');
         const socialsEl = document.querySelector('.contact-right .socials');
         const availH = section.clientHeight - 96 - (socialsEl ? socialsEl.offsetHeight + 32 : 0);
@@ -1117,7 +1170,9 @@
          Fisher-Yates shuffled so which card ends up where changes every time. */
       function calcScatPos() {
         const { sw, sh, cw, ch } = stageDims();
-        const COLS = 3, ROWS = 2;
+        /* portrait stages (split-screen, phones) fan into 2×3 instead of 3×2 */
+        const portrait = sh > sw;
+        const COLS = portrait ? 2 : 3, ROWS = portrait ? 3 : 2;
 
         const areaW  = sw - PAD * 2;
         const areaH  = sh - TOP_RESERVE - PAD;

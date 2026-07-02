@@ -456,6 +456,16 @@
     .p4 { background: linear-gradient(135deg, #e4ecea 0%, #b8c9c5 100%); }
     .p5 { background: linear-gradient(135deg, #efece2 0%, #ccc49f 100%); }
     .p6 { background: linear-gradient(135deg, #e6e0ec 0%, #bfb3cf 100%); }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width: 600px) {
+      .wrap { padding: 0 20px; }
+      header.project-hero { padding: 56px 0 40px; }
+      .project-hero h1 { font-size: clamp(30px, 9.5vw, 44px); }
+      section { padding: 48px 0; }
+      .overview p { text-align: left; }
+      .next-project { padding: 64px 0; }
+    }
   </style>
 </head>
 <body>

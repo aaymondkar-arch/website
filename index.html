@@ -142,6 +142,26 @@
     }
     #cursor-label.visible { opacity: 1; }
 
+    /* Touch devices get a fixed hint instead of the cursor label */
+    #tap-hint {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: #000000;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    #tap-hint.visible { opacity: 1; }
+
+    @media (max-width: 600px) {
+      #landing { padding: 24px 20px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       #big-text.typing::after { animation: none; }
     }
@@ -188,6 +208,7 @@
   <div id="landing">
     <p id="big-text"></p>
   </div>
+  <div id="tap-hint" aria-hidden="true">tap to continue</div>
 
   <script>
     const COPY = "Curious enough to design anything and everything. Visual designer crafting thoughtful, considered work across identity, print, and digital. Noticing the smallest details and being inspired by it is what keeps me going.";
@@ -232,14 +253,19 @@
     }, { passive: true });
 
     // ---------- Typewriter ----------
+    const touchOnly = window.matchMedia('(hover: none)').matches;
+    const tapHint   = document.getElementById('tap-hint');
+
     function onTypingDone() {
       el.classList.remove('typing');
       label.classList.add('visible');
+      if (touchOnly) tapHint.classList.add('visible');
     }
 
     if (reduced) {
       el.textContent = COPY;
       label.classList.add('visible');
+      if (touchOnly) tapHint.classList.add('visible');
     } else {
       el.classList.add('typing');
       let i = 0;
