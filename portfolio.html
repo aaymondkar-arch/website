@@ -1104,9 +1104,6 @@
       const section = document.getElementById('work');
       if (!stage || !section) return;
 
-      /* CSS handles the static grid; skip all animation logic */
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
       /* Build card DOM and inject into stage */
       const wraps = PROJECTS.map((p) => {
         const wrap = document.createElement('div');
@@ -1146,6 +1143,14 @@
         stage.appendChild(wrap);
         return wrap;
       });
+
+      /* Reduced motion: the cards above are all that's needed — CSS lays
+         them out as a static grid. Skip every bit of animation logic, but
+         keep hover/focus title reveals live. */
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        wraps.forEach(w => w.classList.add('sc-live'));
+        return;
+      }
 
       /* Stored positions — seeded once, never change during a session  */
       let initPos = null;
