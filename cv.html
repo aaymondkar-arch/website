@@ -172,11 +172,17 @@
       const D = window.BLAH_FRAMES;
       if (!D) return;
 
+      // Phones / touch: the CV fills the viewport, so there is no floor for
+      // blah to roam. He runs at ~half size and IN FRONT of the CV instead
+      // (sparse ASCII, pointer-events none - the CV stays readable).
+      const MOBILE = window.matchMedia('(max-width: 700px), (hover: none)').matches;
+      const SCALE = MOBILE ? 0.55 : 1;
+
       const TICK = 30;               // ms per tick
       const W = D.cols, H = D.rows;  // 50 x 30 character grid
-      const CELL_W = 5.7, CELL_H = 10;  // 10px monospace cell
-      const CHAR_W = Math.round(W * CELL_W);   // ~285px
-      const CHAR_H = H * CELL_H;               // 300px
+      const CELL_W = 5.7 * SCALE, CELL_H = 10 * SCALE;  // 10px monospace cell
+      const CHAR_W = Math.round(W * CELL_W);   // ~285px (~157px mobile)
+      const CHAR_H = H * CELL_H;               // 300px (165px mobile)
 
       // ── Mirroring (source run cycle faces right) ────────────────────
       const SWAP = { '/':'\\', '\\':'/', '(':')', ')':'(', '[':']', ']':'[', '{':'}', '}':'{', '<':'>', '>':'<' };
@@ -221,6 +227,7 @@
 
       const manEl    = document.getElementById('ascii-man');
       const framesEl = document.getElementById('ascii-frames');
+      if (SCALE !== 1) framesEl.style.fontSize = CELL_H + 'px';
       const bubbleEl = document.getElementById('ascii-bubble');
       const bubbleTx = document.getElementById('bubble-text');
       const img      = document.getElementById('cv-img');
@@ -333,7 +340,7 @@
             const r = Math.random();
             if      (r < 0.22) setState('SLEEP');
             else if (r < 0.44) setState('WORKOUT');
-            else if (r < 0.56) setState('HIDE');
+            else if (r < 0.56 && !MOBILE) setState('HIDE');  // no hiding when he's in front
             else { pickTarget(); setState('ROAM'); }
           }
           if (ms(stTicks) > 600 && cursorNear) setState('CHASE');
@@ -397,10 +404,11 @@
         manEl.style.left = Math.round(px) + 'px';
         manEl.style.top  = Math.round(py) + 'px';
 
-        // Always go behind the CV when overlapping - never on top of it
+        // Desktop: always go behind the CV when overlapping - never on top.
+        // Mobile: the CV covers the screen, so behind = invisible; stay in front.
         const overCV = px + CHAR_W * 0.7 > ir.left && px + CHAR_W * 0.3 < ir.right &&
                        py + CHAR_H * 0.85 > ir.top && py + CHAR_H * 0.15 < ir.bottom;
-        manEl.style.zIndex = overCV ? '3' : '10';
+        manEl.style.zIndex = overCV && !MOBILE ? '3' : '10';
       }
 
       function start() { init(); setInterval(tick, TICK); }

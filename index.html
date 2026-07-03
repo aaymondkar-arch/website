@@ -286,6 +286,12 @@
       sessionStorage.setItem('from-landing', '1');
       window.location.href = 'portfolio.html';
     });
+
+    // Back/forward cache restore (phone back gesture) revives the page with
+    // the exiting flag still set - clear it so tapping works again
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) delete document.body.dataset.exiting;
+    });
   </script>
 
 </body>
