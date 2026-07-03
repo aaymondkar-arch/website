@@ -19,10 +19,8 @@
       --ink: #121212;
       --muted: #6b6b68;
       --line: #e6e4df;
-      --accent: #121212;
       --card: #ffffff;
       --radius: 4px;
-      --max: 1440px;
     }
 
     *, *:hover, *:focus { cursor: none !important; }
@@ -33,6 +31,9 @@
     html {
       scroll-padding-top: 72px;
       scroll-behavior: smooth;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
 
     html, body {
@@ -48,8 +49,8 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    a { color: inherit; text-decoration: none; }
-    a:hover { opacity: 0.6; transition: opacity 0.2s ease; }
+    a { color: inherit; text-decoration: none; transition: opacity 0.2s ease; }
+    a:hover { opacity: 0.6; }
 
     body { padding-top: 72px; }
 
@@ -188,6 +189,12 @@
       display: block;
     }
     .nav-links a:hover { background: #5a5a5a; color: #ffffff; opacity: 1; }
+    /* Current section: Win98 pressed-button state */
+    .nav-links a[aria-current="true"] {
+      background: #b0b0b0;
+      box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #ffffff;
+    }
+    .nav-links a[aria-current="true"]:hover { background: #5a5a5a; color: #ffffff; }
     @media (max-width: 600px) {
       .win98-title { font-size: 12px; }
       .menubar { padding: 2px 4px; }
@@ -286,106 +293,8 @@
       justify-content: center;
     }
 
-    /* Work: stretch wrap + grid to fill the full available height */
-    section#work .wrap {
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-    #work h2 { flex-shrink: 0; margin-bottom: 20px; }
-    #work .grid {
-      flex: 1;
-      height: 0;
-      min-height: 0;
-      grid-template-rows: repeat(2, 1fr);
-      align-items: stretch;
-    }
-    #work .project { display: flex; flex-direction: column; min-height: 0; }
-    #work .project .thumb { flex: 1; min-height: 0; height: 0; }
-    #work .project .info { flex-shrink: 0; }
-
-    .section-label {
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 32px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .section-label::before {
-      content: "";
-      display: inline-block;
-      width: 8px; height: 8px;
-      background: var(--ink);
-      border-radius: 50%;
-    }
-
-    h2 {
-      font-family: "Helvetica Neue World 75 Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: clamp(24px, 2.6vw, 36px);
-      line-height: 1.2;
-      letter-spacing: 0;
-      font-weight: 700;
-      margin: 0 0 32px;
-      max-width: 800px;
-      text-wrap: balance;
-    }
-
-    /* ---------- PROJECTS ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px 28px;
-    }
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(2, 1fr); gap: 16px 20px; }
-    }
-    @media (max-width: 600px) {
-      .grid { grid-template-columns: 1fr; gap: 16px; }
-    }
-
-    .project { display: block; }
-    .project:hover { opacity: 1; }
-    .project .thumb {
-      width: 100%;
-      height: 180px;
-      background: var(--card);
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .project img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .project .thumb .placeholder {
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .project .info {
-      margin-top: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-    }
-    .project h3 {
-      font-size: 13px;
-      margin: 0;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .project .tag { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
-    .project p.desc { margin: 6px 0 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
-
+    /* Thumbless-project placeholder gradients (see the scatter script's
+       sc-placeholder fallback) */
     .p1 { background: linear-gradient(135deg, #f0ece4 0%, #d9d3c6 100%); }
     .p2 { background: linear-gradient(135deg, #e7e9ec 0%, #c4c9d1 100%); }
     .p3 { background: linear-gradient(135deg, #ece4e4 0%, #d1bfbf 100%); }
@@ -426,9 +335,6 @@
     .socials .row a { color: var(--ink); font-weight: 700; }
     .socials .row .k { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; }
     @media (max-width: 800px) { .contact { grid-template-columns: 1fr; gap: 48px; } }
-
-    /* ---------- FOOTER ---------- */
-    footer { display: none; }
 
     /* ---------- REVEAL ---------- */
     .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -702,15 +608,8 @@
     </div>
   </section>
 
-  <footer>
-    <div class="wrap">
-      <div>© <span id="year"></span> Aayush Mondkar. All rights reserved.</div>
-      <div>Made with care.</div>
-    </div>
-  </footer>
-
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    const REDUCE_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ---------- Loading screen (arriving from landing.html) ----------
     (function () {
@@ -720,7 +619,7 @@
       // [data-loading] #loading-screen keeps the screen visible until we're done.
       const screen = document.getElementById('loading-screen');
       if (!screen) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (REDUCE_MOTION) {
         screen.remove();
         delete document.documentElement.dataset.loading;
         return;
@@ -746,6 +645,16 @@
       }, { passive: true });
     })();
 
+
+    // ---------- Hero video — hold the poster frame under reduced motion ----------
+    (function () {
+      if (!REDUCE_MOTION) return;
+      const v = document.querySelector('.hero-video video');
+      if (!v) return;
+      v.removeAttribute('autoplay');
+      v.removeAttribute('loop');
+      v.pause();
+    })();
 
     // ---------- Hero text — fit to video height ----------
     (function () {
@@ -785,8 +694,9 @@
       const NAV_H = 72;
       let current = 0;
       let locked = false;
-      // Narrow windows (split-screen, tablet, phone) scroll naturally
-      const narrow = () => window.innerWidth <= 1024;
+      // Narrow windows (split-screen, tablet, phone) scroll naturally,
+      // and so do reduced-motion users (no hijack, no animated scroll)
+      const narrow = () => window.innerWidth <= 1024 || REDUCE_MOTION;
 
       function targetScrollTop(idx) {
         return Math.max(0, sections[idx].offsetTop - NAV_H);
@@ -857,9 +767,32 @@
         const href = a.getAttribute("href");
         if (!href || href === "#") return;
         const target = document.querySelector(href);
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: REDUCE_MOTION ? "auto" : "smooth", block: "start" }); }
       });
     });
+
+    // ---------- Nav — mark the current section (Win98 pressed state) ----------
+    (function () {
+      const links = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+      const targets = links.map(a => document.querySelector(a.getAttribute('href')));
+      if (!links.length || targets.some(t => !t)) return;
+
+      let activeIdx = -1;
+      function update() {
+        const mid = window.scrollY + 72 + 10;
+        let idx = 0;
+        targets.forEach((s, i) => { if (s.offsetTop <= mid) idx = i; });
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        links.forEach((a, i) => {
+          if (i === idx) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
+      update();
+    })();
 
     // ---------- ASCII eyes ----------
     (function () {
@@ -1035,7 +968,7 @@
       eyeL.textContent = renderEye(0, 0, -1);
       eyeR.textContent = renderEye(0, 0, +1);
       // Reduced motion: hold forward gaze, no tracking loop
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (REDUCE_MOTION) return;
       window.addEventListener("mousemove", onMove, { passive: true });
       function idleTick() { if (lastE) tick(); requestAnimationFrame(idleTick); }
       requestAnimationFrame(idleTick);
@@ -1147,7 +1080,7 @@
       /* Reduced motion: the cards above are all that's needed — CSS lays
          them out as a static grid. Skip every bit of animation logic, but
          keep hover/focus title reveals live. */
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (REDUCE_MOTION) {
         wraps.forEach(w => w.classList.add('sc-live'));
         return;
       }
