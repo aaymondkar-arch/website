@@ -144,7 +144,7 @@
   });
 
   wireButton('Minimize', function () {
-    showEggDialog('why.jpg', 'why', 'why do you think was going to work');
+    showEggDialog('why.jpg', 'why', 'why do you think that was going to work?');
   });
 
   wireButton('Maximize', function () {
