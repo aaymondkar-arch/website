@@ -280,6 +280,7 @@
 
     /* ---------- SECTIONS ---------- */
     section#work,
+    section#archive,
     section#contact {
       height: calc(100vh - 72px);
       display: flex;
@@ -287,11 +288,32 @@
       padding: 48px 0;
       overflow: hidden;
     }
+    section#archive .wrap,
     section#contact .wrap {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    /* ---------- ARCHIVE ---------- */
+    .archive-kicker {
+      margin: 0 0 24px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    #archive-link {
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      font-size: clamp(44px, 8vw, 128px);
+      align-self: flex-start;
+      overflow-wrap: break-word;
+      word-break: normal;
     }
 
     /* Thumbless-project placeholder gradients (see the scatter script's
@@ -487,6 +509,7 @@
         height: calc(100svh - 72px);
       }
 
+      section#archive,
       section#contact {
         height: auto;
         min-height: calc(100vh - 72px);
@@ -496,6 +519,7 @@
       }
       .contact { grid-template-columns: 1fr; gap: 48px; }
       #contact-title { font-size: clamp(44px, 10vw, 96px); }
+      #archive-link { font-size: clamp(44px, 10vw, 96px); }
       .eyes { gap: 12px; }
       .eyes pre { font-size: min(6px, calc((100vw - 76px) / 132)); }
     }
@@ -504,6 +528,9 @@
       header.hero { padding: 40px 0; }
       .hero-text p { font-size: 16px; }
       #contact-title { font-size: clamp(36px, 12vw, 64px); }
+      /* "tismycamera.com" is one unbreakable word (~8.2em wide) — sized so it
+         always fits the wrap on one line instead of mid-word wrapping */
+      #archive-link { font-size: clamp(28px, calc((100vw - 40px) / 8.6), 64px); }
       .eyes pre { font-size: min(6px, calc((100vw - 52px) / 132)); }
     }
   </style>
@@ -558,6 +585,7 @@
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#work">Work</a>
+        <a href="#archive">Archive</a>
         <a href="#contact">Contact</a>
       </div>
     </div>
@@ -587,6 +615,13 @@
   <section id="work">
     <div id="scatter-stage">
       <!-- .sc-wrap cards injected by the scatter script below -->
+    </div>
+  </section>
+
+  <section id="archive">
+    <div class="wrap">
+      <p class="archive-kicker">Photo archive</p>
+      <a id="archive-link" href="https://tismycamera.com" target="_blank" rel="noopener">tismycamera.com</a>
     </div>
   </section>
 
@@ -688,7 +723,7 @@
     // ---------- Full-page snap scroll ----------
     (function () {
       const sections = Array.from(
-        document.querySelectorAll('header.hero, section#work, section#contact')
+        document.querySelectorAll('header.hero, section#work, section#archive, section#contact')
       );
       if (!sections.length) return;
 
