@@ -297,12 +297,9 @@
     }
 
     /* ---------- ARCHIVE ---------- */
-    .archive-kicker {
-      margin: 0 0 24px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+    section#archive .wrap {
+      align-items: center;
+      text-align: center;
     }
     #archive-link {
       font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
@@ -311,9 +308,17 @@
       letter-spacing: -0.025em;
       color: var(--ink);
       font-size: clamp(44px, 8vw, 128px);
-      align-self: flex-start;
       overflow-wrap: break-word;
       word-break: normal;
+    }
+    .archive-sub {
+      margin: 20px 0 0;
+      font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+      font-weight: 700;
+      line-height: 1.04;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      font-size: clamp(18px, 2.2vw, 32px);
     }
 
     /* Thumbless-project placeholder gradients (see the scatter script's
@@ -620,8 +625,8 @@
 
   <section id="archive">
     <div class="wrap">
-      <p class="archive-kicker">Photo archive</p>
       <a id="archive-link" href="https://tismycamera.com" target="_blank" rel="noopener">tismycamera.com</a>
+      <p class="archive-sub">i take pictures too</p>
     </div>
   </section>
 
